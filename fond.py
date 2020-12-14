@@ -15,23 +15,26 @@ class vaisseau :
 
     def deplacer (self, event):
         touche = event.keysym
-        dX = 20
+        dX =  + 20
+        dY = 10 + 20
         print(touche)
         if touche == 'z':
-            self.MaFenetre_pos_y -= dX
+            self.MaFenetre_pos_y -= dY
         if touche == 's':
-            self.MaFenetre_pos_y += dX
+            self.MaFenetre_pos_y += dY
         if touche == 'd':
-            self.MaFenetre_pos_x -= dX
-        if touche == 'q':
             self.MaFenetre_pos_x += dX
+        if touche == 'q':
+            self.MaFenetre_pos_x -= dX
 
         Canevas.coords(self.rect_vaisseau, self.MaFenetre_pos_x - (dX/2), self.MaFenetre_pos_y - (dX/2),  self.MaFenetre_pos_x + (dX/2), self.MaFenetre_pos_y + (dX/2))
 
-#    def projectile (self) :
-        
-
-
+    '''def projectile (self, event) :
+        touche = event.keysym
+        print(touche)
+        if touche == 'space' :
+            '''
+            
 
 
 #Création de la fenêtre principale
@@ -41,6 +44,7 @@ width = 800
 height = 500
 dim = 20
 
+
 #Image de fond
 #photo = PhotoImage(file = 'Images/Terre.gif')
 
@@ -49,7 +53,7 @@ Frame1 = Frame(MaFenetre,relief='groove', bg = 'yellow')
 Frame1.pack(side='left',padx=10,pady=10)
 
 # creation d'un widget Frame dans la fenetre principale
-Frame2 = Frame(MaFenetre,relief='groove')
+Frame2 = Frame(MaFenetre,relief='groove', bg ='pink')
 Frame2.pack(side='left',padx=10,pady=10)
 
 #Création d'un widget canvas
@@ -57,7 +61,8 @@ Canevas = Canvas(Frame1, height = height, width = width, bg = 'black')
 #tem = Canevas.create_image(0,0, anchor = 'sw', image = photo)
 #print('Image de fond(item', item,")")
 Canevas.focus_set()
-#Canevas.bind('<Key>', vaisseau.deplacer(event))
+vaisseau = vaisseau(line = height, column = 1)
+Canevas.bind('<Key>', vaisseau.deplacer)
 Canevas.pack()
 
 #Création d'un bouton Quitter
@@ -75,6 +80,6 @@ mainmenu.add_cascade(label = 'Menu', menu = menu)
 menu.add_command(label='A propos')
 menu.add_command(label='Quitter', command = menu.destroy)
 
-vaisseau = vaisseau(line = height, column = 1)
+
 MaFenetre.config(menu = mainmenu)
 MaFenetre.mainloop()
