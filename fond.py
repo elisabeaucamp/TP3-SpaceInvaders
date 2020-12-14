@@ -3,10 +3,9 @@ Date : 14 décembre
 To do : fond du jeu'''
 
 from tkinter import Tk, Canvas, Button, PhotoImage, Frame, Menu
-
+from a_propos import about
 
 class vaisseau :
-
     def __init__(self,line, column):
         global height
         self.MaFenetre_pos_x = width - (width - 10)
@@ -77,7 +76,7 @@ BoutonStart.pack(anchor = 'sw', padx = 10, pady = 10)
 mainmenu = Menu(Frame1)
 menu = Menu(mainmenu,tearoff = 0)
 mainmenu.add_cascade(label = 'Menu', menu = menu)
-menu.add_command(label='A propos')
+menu.add_command(label='A propos', command = about)
 menu.add_command(label='Quitter', command = menu.destroy)
 
 
