@@ -23,14 +23,16 @@ from data import data
 width,height,dim,dX = data()
 
 class alien:
-    def __init__(self,line,column):
+    def __init__(self,line,column,canvas,window):
         global height,width,dim
         #calcule des coordonnées en fonction de la hauteur et de la largeur du canvas
         self.fen_pos_x=(width*column/8)-dim
         self.fen_pos_y=((height/2*line)/4)-dim
+        self.canvas=canvas
+        self.window=window
         
         #création du rectangle que l'on enregistre dans l'attribu rect_alien
-        self.rect_alien=can.create_rectangle(self.fen_pos_x,self.fen_pos_y,self.fen_pos_x+dim,self.fen_pos_y+dim,fill='red')
+        self.rect_alien=self.canvas.create_rectangle(self.fen_pos_x,self.fen_pos_y,self.fen_pos_x+dim,self.fen_pos_y+dim,fill='red')
     
     def move(self,dX):
         global height,width,dim
@@ -42,8 +44,8 @@ class alien:
             dX=-dX
         
         self.fen_pos_x=self.fen_pos_x+dX
-        can.coords(self.rect_alien,self.fen_pos_x,self.fen_pos_y,self.fen_pos_x+dim,self.fen_pos_y+dim)
-        fen.after(40,lambda:self.move(dX))
+        self.canvas.coords(self.rect_alien,self.fen_pos_x,self.fen_pos_y,self.fen_pos_x+dim,self.fen_pos_y+dim)
+        self.window.after(40,lambda:self.move(dX))
 
 
 """
