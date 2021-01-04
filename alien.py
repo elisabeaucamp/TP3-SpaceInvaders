@@ -10,7 +10,14 @@ Objet alien :
 Atribut : 
     - fen_pos_x : la position en abscisse de l'alien
     - fen_pos_y : la position en ordonnée de l'alien
+    - canvas : canevas dans lequel se trouve l'objet l'objet
+    - window : fenetre dans lequel se trouve l'objet
+    - width : largeur du canvas
+    - height : hauteur du canvas
+    - dim : dimension des alien
 Les arguments entrées pour créer l'alien sont la ligne et la colonne
+Les arguments canvas,window,width,height et dim permettent de connaitre la dimension de la grille ainsi
+que l'adresse de la grille et de la fenetre
 On part du principe que dans le jeux, les alien peuvent se positionner dans une grille
 de 4 ligne par 8 colonne
 la fonction move permet de déplacer l'objet sur le canvas
@@ -24,11 +31,11 @@ class alien:
         #calcule des coordonnées en fonction de la hauteur et de la largeur du canvas
         self.fen_pos_x=(width*column/8)-dim
         self.fen_pos_y=((height/2*line)/4)-dim
-        self.canvas=canvas #canevas dans lequel se trouve l'objet l'objet
-        self.window=window #fenetre dans lequel se trouve l'objet
-        self.width=width #largeur du canvas
-        self.height=height #hauteur du canvas
-        self.dim=dim #dimension des alien
+        self.canvas=canvas
+        self.window=window
+        self.width=width
+        self.height=height
+        self.dim=dim
         
         #création du rectangle que l'on enregistre dans l'attribu rect_alien
         self.rect_alien=self.canvas.create_rectangle(self.fen_pos_x,self.fen_pos_y,self.fen_pos_x+dim,self.fen_pos_y+dim,fill='red')
