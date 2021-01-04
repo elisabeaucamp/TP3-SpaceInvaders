@@ -61,7 +61,6 @@ MaFenetre = Tk()
 MaFenetre.title("Space Invaders")
 width = 800
 height = 500
-dim=20
 
 #Image de fond
 photo = PhotoImage(file = 'Images/Terre.gif')
@@ -99,9 +98,6 @@ menu = Menu(mainmenu,tearoff = 0)
 mainmenu.add_cascade(label = 'Menu', menu = menu)
 menu.add_command(label='A propos', command = about)
 menu.add_command(label='Quitter', command = menu.destroy)
-
-alien_1=alien(line=2,column=1,canvas=Canevas,window=MaFenetre,width=width,height=height,dim=dim)
-alien_1.move(10)
 
 MaFenetre.config(menu = mainmenu)
 MaFenetre.mainloop()
