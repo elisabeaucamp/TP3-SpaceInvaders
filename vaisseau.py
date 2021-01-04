@@ -3,6 +3,7 @@ Date : 4 janvier
 To do : faire communiquer les fichiers'''
 
 from tkinter import Tk, Canvas, Button, PhotoImage, Frame, Menu
+from alien import alien
 
 class cVaisseau :
     def __init__(self,Canevas,width):
@@ -61,5 +62,10 @@ class cProjectile :
         self.MaFenetre_posy -= 10
         if self.MaFenetre_posy < 0 :
             self.canvas.delete(self.rect_projectile)
+        
+        elif  self.MaFenetre_posy == alien.self.fen_pos_y and self.MaFenetre_posx == alien.self.fen_pos_x :
+            self.canvas.delete(self.rect_projectile)
+            self.canvas.delete(self.rect_alien)
+
         self.canvas.coords(self.rect_projectile, self.MaFenetre_posx - 5, self.MaFenetre_posy - 5, self.MaFenetre_posx + 5, self.MaFenetre_posy + 5)
-        self.canvas.after(40,lambda:self.move(event))
+        self.canvas.after(15,lambda:self.move(event))
