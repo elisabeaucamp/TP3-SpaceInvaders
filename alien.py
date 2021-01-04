@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 #Auteur : Mathurin LEMARIE
-#Date : 14/12/2020
-#Reste à faire : déplacement verticale de l'alien,redéfinir "fen" et "can"
+#Date : 04/01/2021
+#Reste à faire : détection du projectile
 
 """
 Objet alien : 
