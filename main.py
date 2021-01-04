@@ -5,6 +5,7 @@ To do : création du projectile au bon endroit tant qu'on n'a pas appuyé sur es
 from tkinter import Tk, Canvas, Button, PhotoImage, Frame, Menu
 from a_propos import about
 from alien import alien
+from vaisseau import cVaisseau
 
 #Création de la fenêtre principale
 MaFenetre = Tk()
@@ -31,8 +32,7 @@ Canevas = Canvas(Frame1, height = height, width = width)
 item = Canevas.create_image(0,0, anchor = 'sw', image = photo)
 print('Image de fond(item', item,")")
 Canevas.focus_set()
-
-unVaisseau = cVaisseau()
+unVaisseau = cVaisseau(Canevas=Canevas,width=width)
 Canevas.bind('<Left>',unVaisseau.deplacer)
 Canevas.bind('<Right>',unVaisseau.deplacer)
 Canevas.bind('<space>',unVaisseau.tir)
@@ -52,10 +52,8 @@ menu = Menu(mainmenu,tearoff = 0)
 mainmenu.add_cascade(label = 'Menu', menu = menu)
 menu.add_command(label='A propos', command = about)
 menu.add_command(label='Quitter', command = menu.destroy)
-alien_1=alien(line=2,column=1,canvas=Canevas,window=MaFenetre,width=width,height=height,dim=dim)
+alien_1=alien(line=1,column=4,canvas=Canevas,window=MaFenetre,width=width,height=height,dim=dim)
 alien_1.move(dX,dY,0)
-alien_2=alien(line=2,column=3,canvas=Canevas,window=MaFenetre,width=width,height=height,dim=dim)
-alien_2.move(dX,dY,0)
 
 MaFenetre.config(menu = mainmenu)
 MaFenetre.mainloop()
