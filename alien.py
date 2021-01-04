@@ -25,7 +25,7 @@ la fonction move permet de déplacer l'objet sur le canvas
 """
 
 #from tkinter import Tk,Canvas
-
+from vaisseau import cVaisseau
 
 class alien:
     def __init__(self,line,column,canvas,window,width,height,dim):
@@ -73,3 +73,9 @@ class alien:
         self.fen_pos_x+=dX
         self.canvas.coords(self.rect_alien,self.fen_pos_x,self.fen_pos_y,self.fen_pos_x+self.dim,self.fen_pos_y+self.dim)
         self.window.after(40,lambda:self.move(dX,dY,tour))
+    
+    def get_pos_x(self):
+        return self.fen_pos_x
+    
+    def get_pos_y(self):
+        return self.fen_pos_y
