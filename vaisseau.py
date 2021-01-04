@@ -42,10 +42,13 @@ class cVaisseau :
     def getPosY(self) :
         return int(self.MaFenetre_pos_y)
 
+    def __str__(self) :
+        return "[" + str(self.MaFenetre_pos_x)+"]"
+
     def tir(self,event) :
         touche = event.keysym
         if touche == "space" :
-            print('hyper vitesse')
+            print(cVaisseau.__str__)
             projectile = cProjectile(posx = self.MaFenetre_pos_x , posy = self.MaFenetre_pos_y,Canevas = self.canvas)
             projectile.move(event)
 
@@ -62,10 +65,7 @@ class cProjectile :
         self.MaFenetre_posy -= 10
         if self.MaFenetre_posy < 0 :
             self.canvas.delete(self.rect_projectile)
-        
-        elif  self.MaFenetre_posy == alien.self.fen_pos_y and self.MaFenetre_posx == alien.self.fen_pos_x :
-            self.canvas.delete(self.rect_projectile)
-            self.canvas.delete(self.rect_alien)
-
+        elif self.MaFenetre_posy == alien.get_pos_y :
+            print('ouille')
         self.canvas.coords(self.rect_projectile, self.MaFenetre_posx - 5, self.MaFenetre_posy - 5, self.MaFenetre_posx + 5, self.MaFenetre_posy + 5)
         self.canvas.after(15,lambda:self.move(event))
