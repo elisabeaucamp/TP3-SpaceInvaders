@@ -48,12 +48,14 @@ class cVaisseau :
     def tir(self,event) :
         touche = event.keysym
         if touche == "space" :
-            print(cVaisseau.__str__)
             projectile = cProjectile(posx = self.MaFenetre_pos_x , posy = self.MaFenetre_pos_y,Canevas = self.canvas)
-            projectile.move(event)
+            projectile.move(event,self.alien)
     
     def death(self):
         self.canvas.delete(self.rect_vaisseau)
+
+    def init2(self,alien):
+        self.alien = alien
 
 class cProjectile :
     def __init__(self,posx,posy,Canevas) :
@@ -64,11 +66,12 @@ class cProjectile :
         #Création projectile
         self.rect_projectile = self.canvas.create_rectangle(self.MaFenetre_posx - 5, self.MaFenetre_posy - 5, self.MaFenetre_posx + 5, self.MaFenetre_posy + 5, fill = 'yellow')
     
-    def move (self,event) :
+    def move (self,event,ennemi) :
         self.MaFenetre_posy -= 10
         if self.MaFenetre_posy < 0 :
+            self.canvas.delete(self.rect_projectile) 
+        if ennemi.fen_pos_x == self.MaFenetre_posx :
             self.canvas.delete(self.rect_projectile)
-        elif self.MaFenetre_posy == alien.get_pos_y :
-            print('ouille')
+            self.canvas.delete(ennemi.rect_alien)
         self.canvas.coords(self.rect_projectile, self.MaFenetre_posx - 5, self.MaFenetre_posy - 5, self.MaFenetre_posx + 5, self.MaFenetre_posy + 5)
-        self.canvas.after(15,lambda:self.move(event))
+        self.canvas.after(15,lambda:self.move(event,ennemi))

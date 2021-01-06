@@ -36,6 +36,7 @@ unVaisseau = cVaisseau(Canevas=Canevas,width=width)
 
 alien_1=alien(line=6,column=4,canvas=Canevas,window=MaFenetre,width=width,height=height,dim=dim,vaisseau=unVaisseau)
 alien_1.move(dX,dY,0)
+unVaisseau.init2(alien_1)
 
 Canevas.bind('<Left>',unVaisseau.deplacer)
 Canevas.bind('<Right>',unVaisseau.deplacer)
