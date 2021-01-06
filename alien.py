@@ -75,6 +75,7 @@ class alien:
         
         if self.fen_pos_x+self.dim > self.vaisseau.canvas.coords(self.vaisseau.rect_vaisseau)[0] and self.fen_pos_x < self.vaisseau.canvas.coords(self.vaisseau.rect_vaisseau)[2] and self.fen_pos_y+self.dim > self.vaisseau.canvas.coords(self.vaisseau.rect_vaisseau)[1] and self.fen_pos_y < self.vaisseau.canvas.coords(self.vaisseau.rect_vaisseau)[3]:
             print("COLLISION")
+            self.vaisseau.death()
         
         self.fen_pos_x+=dX
         self.canvas.coords(self.rect_alien,self.fen_pos_x,self.fen_pos_y,self.fen_pos_x+self.dim,self.fen_pos_y+self.dim)

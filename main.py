@@ -33,6 +33,10 @@ item = Canevas.create_image(0,0, anchor = 'sw', image = photo)
 print('Image de fond(item', item,")")
 Canevas.focus_set()
 unVaisseau = cVaisseau(Canevas=Canevas,width=width)
+
+alien_1=alien(line=6,column=4,canvas=Canevas,window=MaFenetre,width=width,height=height,dim=dim,vaisseau=unVaisseau)
+alien_1.move(dX,dY,0)
+
 Canevas.bind('<Left>',unVaisseau.deplacer)
 Canevas.bind('<Right>',unVaisseau.deplacer)
 Canevas.bind('<space>',unVaisseau.tir)
@@ -52,8 +56,7 @@ menu = Menu(mainmenu,tearoff = 0)
 mainmenu.add_cascade(label = 'Menu', menu = menu)
 menu.add_command(label='A propos', command = about)
 menu.add_command(label='Quitter', command = menu.destroy)
-alien_1=alien(line=1,column=4,canvas=Canevas,window=MaFenetre,width=width,height=height,dim=dim)
-alien_1.move(dX,dY,0)
+
 
 MaFenetre.config(menu = mainmenu)
 MaFenetre.mainloop()
