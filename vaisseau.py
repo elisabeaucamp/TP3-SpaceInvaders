@@ -51,9 +51,6 @@ class cVaisseau :
             print(cVaisseau.__str__)
             projectile = cProjectile(posx = self.MaFenetre_pos_x , posy = self.MaFenetre_pos_y,Canevas = self.canvas)
             projectile.move(event)
-    
-    def death(self):
-        self.canvas.delete(self.rect_vaisseau)
 
 class cProjectile :
     def __init__(self,posx,posy,Canevas) :

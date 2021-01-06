@@ -20,7 +20,7 @@ dY = 10
 photo = PhotoImage(file = 'Images/Terre.gif')
 
 # creation d'un widget Frame dans la fenetre principale
-Frame1 = Frame(MaFenetre,relief='groove', bg = 'yellow')
+Frame1 = Frame(MaFenetre,relief='groove', bg = 'grey')
 Frame1.pack(side='left',padx=10,pady=10)
 
 # creation d'un widget Frame dans la fenetre principale

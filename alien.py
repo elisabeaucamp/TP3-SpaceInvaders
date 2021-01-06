@@ -7,7 +7,7 @@
 
 """
 Objet alien : 
-Atribut : 
+Atributs :
     - column : numéro de la colonne
     - fen_pos_x : la position en abscisse de l'alien
     - fen_pos_y : la position en ordonnée de l'alien
@@ -26,6 +26,7 @@ la fonction move permet de déplacer l'objet sur le canvas
 """
 
 #from tkinter import Tk,Canvas
+from endgame import end_game
 
 class alien:
     def __init__(self,line,column,canvas,window,width,height,dim,vaisseau):
@@ -74,8 +75,8 @@ class alien:
             return #arrête l'exécution de la fonction
         
         if self.fen_pos_x+self.dim > self.vaisseau.canvas.coords(self.vaisseau.rect_vaisseau)[0] and self.fen_pos_x < self.vaisseau.canvas.coords(self.vaisseau.rect_vaisseau)[2] and self.fen_pos_y+self.dim > self.vaisseau.canvas.coords(self.vaisseau.rect_vaisseau)[1] and self.fen_pos_y < self.vaisseau.canvas.coords(self.vaisseau.rect_vaisseau)[3]:
-            print("COLLISION")
-            self.vaisseau.death()
+            end_game(self.window,self.canvas)
+            return #arrête l'exécution de la fonction
         
         self.fen_pos_x+=dX
         self.canvas.coords(self.rect_alien,self.fen_pos_x,self.fen_pos_y,self.fen_pos_x+self.dim,self.fen_pos_y+self.dim)
