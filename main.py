@@ -25,6 +25,8 @@ Frame1.pack(side='left',padx=10,pady=10)
 Frame2 = Frame(MaFenetre,relief='groove', bg ='pink')
 Frame2.pack(side='left',padx=10,pady=10)
 
+
+
 #Création d'un widget canvas
 Canevas = Canvas(Frame1, height = height, width = width)
 item = Canevas.create_image(0,0, anchor = 'sw', image = photo)
@@ -40,20 +42,21 @@ Puis on enregistre ces coordonnées dans un tableau que l'on passer à l'objet e
 alien_ligne=4
 alien_colonne=8
 alien_array=[]
-
+#génération du tableau
 for i in range(alien_ligne):
     for j in range(alien_colonne):
         y=int(300/alien_ligne)*i+20
         x=int(500/alien_colonne)*j+100
         alien_array.append([x,y])
 
+#génération des objets alien sur le canvas
 ennemies=alien(alien_array,canvas=Canevas,window=MaFenetre)
 ennemies.move(20,10)
-
+#génération des ilots et du vaisseau
 unIlot = cIlot(Canevas = Canevas)
-
 unVaisseau.init2(alien_array,unIlot)
 
+#bind des touches pour le vaisseau
 Canevas.bind('<Left>',unVaisseau.deplacer)
 Canevas.bind('<Right>',unVaisseau.deplacer)
 Canevas.bind('<space>',unVaisseau.tir)
@@ -73,7 +76,6 @@ menu = Menu(mainmenu,tearoff = 0)
 mainmenu.add_cascade(label = 'Menu', menu = menu)
 menu.add_command(label='A propos', command = about)
 menu.add_command(label='Quitter', command = menu.destroy)
-
 
 MaFenetre.config(menu = mainmenu)
 MaFenetre.mainloop()

@@ -1,9 +1,20 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
-Created on Sun Jan 10 16:27:42 2021
+Auteur : Mathurin LEMARIE
+Date : 11/01/2021
 
-@author: lemarie
+Objet alien :
+Permet de créer la grille d'alien ennemie
+Attribues : 
+    - alien_array : tableau contenant la liste des alien et leurs attribues propres.
+      pour chaque slot :
+        - indice 0 et 1 : coordonnées respectivement x et y des aliens
+        - indice 2 : adresse de l'objet rectangle dans le canvas
+        - indice 3 : indique l'état de l'alien dans le jeux : 1 si en vie, 0 si mort
+    - canvas : canvas dans lequel on génère les aliens
+    - window : fenêtre dans laquelle on génère le canvas
+    
+Fonction : 
+    - move : fait bouger toute les 3 secondes les alien de dX sur le côté et de dY vers le bas
 """
 
 #from tkinter import Tk, Canvas, Button, PhotoImage, Frame, Menu
@@ -15,87 +26,38 @@ class alien:
         self.window=window
         self.dim=20
         self.tour=0
-
+        
+        #Boucle permettant d'enregistrer l'adresse de l'objet rectangle et l'état de l'alien (mort ou vivant)
         for i in range(len(self.alien_array)):
             rect=self.canvas.create_rectangle(self.alien_array[i][0],self.alien_array[i][1],self.alien_array[i][0]+self.dim,self.alien_array[i][1]+self.dim, fill = 'red')
             self.alien_array[i].append(rect)
             self.alien_array[i].append(1)
-        
-        print(self.alien_array)
 
     def move(self,dX,dY):
+        #Fonction permettant de faire bouger l'alien
         
+        #détection de la bordure droite du canvas
         if self.alien_array[len(self.alien_array)-1][0]+self.dim > int(self.canvas.cget('width'))-10:
             dX=-dX
             self.tour+=1
         
+        #détection de la bordure gauche du canvas
         if self.alien_array[0][0] < 10:
             dX=-dX
             self.tour+=1
         
+        #mise à jour des coordonées x et y de chaque alien
         for i in range(len(self.alien_array)):
             self.alien_array[i][0]+=dX
             if self.tour==2:
+                #"si un allé retour à été fait..."
                 self.alien_array[i][1]+=dY
             
             self.canvas.coords(self.alien_array[i][2],self.alien_array[i][0],self.alien_array[i][1],self.alien_array[i][0]+self.dim,self.alien_array[i][1]+self.dim)
 
+        #remise à 9 du compteur d'allé retour
         if self.tour==2:
             self.tour=0
 
+        #rebouclage de la fonction toutes les 3 secondes
         self.window.after(3000,lambda:self.move(dX,dY))
-
-"""
-width = 800
-height = 500
-
-MaFenetre = Tk()
-MaFenetre.title("Space Invaders")
-
-#génération du tableau de coordonnée des alien :
-
-alien_ligne=4
-alien_colonne=8
-alien_array=[]
-
-for i in range(alien_ligne):
-    for j in range(alien_colonne):
-        y=int(300/alien_ligne)*i+20
-        x=int(500/alien_colonne)*j+100
-        alien_array.append([x,y])
-
-
-Frame1 = Frame(MaFenetre,relief='groove', bg = 'grey')
-Frame1.pack(side='left',padx=10,pady=10)
-
-# creation d'un widget Frame dans la fenetre principale
-Frame2 = Frame(MaFenetre,relief='groove', bg ='pink')
-Frame2.pack(side='left',padx=10,pady=10)
-
-#Création d'un widget canvas
-Canevas = Canvas(Frame1, height = height, width = width)
-Canevas.focus_set()
-Canevas.pack()
-
-ennemies = alien(alien_array=alien_array,canvas=Canevas,window=MaFenetre)
-ennemies.move(10,20)
-
-#Création d'un bouton Quitter
-BoutonQuitter = Button(Frame2, text = 'Quitter', command = MaFenetre.destroy)
-BoutonQuitter.pack(anchor = 'nw', padx = 10, pady = 10)
-
-#Création d'un bouton Start
-BoutonStart = Button(Frame2, text = 'Start')
-BoutonStart.pack(anchor = 'sw', padx = 10, pady = 10)
-
-#Création d'un menu
-mainmenu = Menu(Frame1)
-menu = Menu(mainmenu,tearoff = 0)
-mainmenu.add_cascade(label = 'Menu', menu = menu)
-menu.add_command(label='A propos', command = about)
-menu.add_command(label='Quitter', command = menu.destroy)
-
-
-MaFenetre.config(menu = mainmenu)
-MaFenetre.mainloop()
-"""

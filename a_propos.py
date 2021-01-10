@@ -1,9 +1,8 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
-Created on Mon Dec 14 17:30:19 2020
-
-@author: lemarie
+Auteur : Mathurin LEMARIE
+Date : 11/01/2021
+Cette fonction permet d'afficher le contenu la fenêtre 'à propos' lorsque l'on clique sur celle-ci
+dans : menu --> à propos
 """
 
 from tkinter import Tk, Label
@@ -11,6 +10,6 @@ from tkinter import Tk, Label
 def about():
     about_window=Tk()
     about_window.title("A propos de notre jeux")
-    txt_lbl=Label(about_window, text="A propos:\n\nQu'est ce qu'il est cool ce jeux !\n\nJ'ai envie d'y jouer toute la night")
+    txt_lbl=Label(about_window, text="SPACE INVADER\n\nAuteurs :\n\nElisa BEAUCAMP & Mathurin LEMARIE\n\n2021")
     txt_lbl.pack(padx=100,pady=100)
     about_window.mainloop()

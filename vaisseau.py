@@ -1,6 +1,6 @@
 '''auteur : Elisa
-Date : 4 janvier
-To do : faire communiquer les fichiers tuer les aliens'''
+Date : 11 janvier 2021
+To do : supprimer les ilots'''
 
 from tkinter import Tk, Canvas, Button, PhotoImage, Frame, Menu
 #from alien import alien
@@ -71,18 +71,20 @@ class cProjectile :
     
     def move (self,event,alien,ilot) :
         self.MaFenetre_posy -= 10
+        
+        #détection de la bordure supérieur du canvas
         if self.MaFenetre_posy < 0 :
             self.canvas.delete(self.rect_projectile)
-            return
+            return #on arrête l'exécution de la fonction car le projectile n'existe plus
 
-            #self.canvas.delete(self.rect_projectile)
-            #self.canvas.delete(ennemi1.rect_alien)
-        for i in range(len(alien)):
+        #détection d'une collision entre un alien et un projectile
+        for i in range(len(alien)): #on vérifie pour chaque alien
             if alien[i][0] < self.MaFenetre_posx < alien[i][0]+20 and alien[i][1] < self.MaFenetre_posy < alien[i][1]+20 and alien[i][3]==1:
+                #suppression de l'alien et mise à 0 de son indice dans le tableau
                 self.canvas.delete(alien[i][2])
                 alien[i][3]=0
                 self.canvas.delete(self.rect_projectile)
-                return
+                return #on arrête l'exécution de la fonction car le projectile n'existe plus
 
         if self.MaFenetre_posy == ilot.posy1 + 30 and ilot.abscisse11 < self.MaFenetre_posx < ilot.abscisse12 :
             print("ilot central touché")
