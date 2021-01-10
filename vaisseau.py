@@ -53,7 +53,6 @@ class cVaisseau :
     
     def death(self):
         self.canvas.delete(self.rect_vaisseau)
-        projectile.move(event)
 
     def init2(self,alien):
         self.alien = alien
@@ -71,7 +70,7 @@ class cProjectile :
         self.MaFenetre_posy -= 10
         if self.MaFenetre_posy < 0 :
             self.canvas.delete(self.rect_projectile) 
-        if ennemi.fen_pos_x == self.MaFenetre_posx :
+        if ennemi.fen_pos_x == self.MaFenetre_posx and ennemi.fen_pos_y == self.MaFenetre_posy :
             self.canvas.delete(self.rect_projectile)
             self.canvas.delete(ennemi.rect_alien)
         self.canvas.coords(self.rect_projectile, self.MaFenetre_posx - 5, self.MaFenetre_posy - 5, self.MaFenetre_posx + 5, self.MaFenetre_posy + 5)
