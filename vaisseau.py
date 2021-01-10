@@ -49,10 +49,14 @@ class cVaisseau :
         touche = event.keysym
         if touche == "space" :
             projectile = cProjectile(posx = self.MaFenetre_pos_x , posy = self.MaFenetre_pos_y,Canevas = self.canvas)
+<<<<<<< HEAD
             projectile.move(event,self.alien)
     
     def death(self):
         self.canvas.delete(self.rect_vaisseau)
+=======
+            projectile.move(event)
+>>>>>>> 2fbc842b1c5927cca0afd49132973ca72c12583b
 
     def init2(self,alien):
         self.alien = alien
