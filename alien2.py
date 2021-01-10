@@ -13,18 +13,37 @@ class alien:
         self.alien_array = alien_array
         self.canvas=canvas
         self.window=window
-        
-        dim=20
-        for i in range(len(self.alien_array)):
-            self.canvas.create_rectangle(self.alien_array[i][0],self.alien_array[i][1],self.alien_array[i][0]+dim,self.alien_array[i][1]+dim, fill = 'red')
-            
-    def move():
-        
+        self.dim=20
+        self.tour=0
 
+        for i in range(len(self.alien_array)):
+            rect=self.canvas.create_rectangle(self.alien_array[i][0],self.alien_array[i][1],self.alien_array[i][0]+self.dim,self.alien_array[i][1]+self.dim, fill = 'red')
+            self.alien_array[i].append(rect)
+        
+    def move(self,dX,dY):
+        
+        if self.alien_array[len(alien_array)-1][0]+self.dim > int(self.canvas.cget('width'))-10:
+            dX=-dX
+            self.tour+=1
+        
+        if self.alien_array[0][0] < 10:
+            dX=-dX
+            self.tour+=1
+        
+        for i in range(len(self.alien_array)):
+            self.alien_array[i][0]+=dX
+            if self.tour==2:
+                self.alien_array[i][1]+=dY
+            
+            self.canvas.coords(self.alien_array[i][2],self.alien_array[i][0],self.alien_array[i][1],self.alien_array[i][0]+self.dim,self.alien_array[i][1]+self.dim)
+
+        if self.tour==2:
+            self.tour=0
+
+        self.window.after(50,lambda:self.move(dX,dY))
 
 width = 800
 height = 500
-dim = 20
 
 MaFenetre = Tk()
 MaFenetre.title("Space Invaders")
@@ -41,7 +60,6 @@ for i in range(alien_ligne):
         x=int(500/alien_colonne)*j+100
         alien_array.append([x,y])
 
-print(alien_array)
 
 Frame1 = Frame(MaFenetre,relief='groove', bg = 'grey')
 Frame1.pack(side='left',padx=10,pady=10)
@@ -56,7 +74,7 @@ Canevas.focus_set()
 Canevas.pack()
 
 ennemies = alien(alien_array=alien_array,canvas=Canevas,window=MaFenetre)
-enemies.move()
+ennemies.move(10,20)
 
 #Création d'un bouton Quitter
 BoutonQuitter = Button(Frame2, text = 'Quitter', command = MaFenetre.destroy)
