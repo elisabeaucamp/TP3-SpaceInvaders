@@ -13,9 +13,6 @@ MaFenetre = Tk()
 MaFenetre.title("Space Invaders")
 width = 800
 height = 500
-dim = 20
-dX = 10
-dY = 10
 
 #Image de fond
 photo = PhotoImage(file = 'Images/Terre.gif')
@@ -35,14 +32,27 @@ print('Image de fond(item', item,")")
 Canevas.focus_set()
 unVaisseau = cVaisseau(Canevas=Canevas,width=width)
 
-alien_1=alien(line=3,column=4,canvas=Canevas,window=MaFenetre,width=width,height=height,dim=dim,vaisseau=unVaisseau)
-alien_1.move(dX,dY,0)
-alien_2=alien(line=2,column=1,canvas=Canevas,window=MaFenetre,width=width,height=height,dim=dim,vaisseau=unVaisseau)
-alien_2.move(dX,dY,0)
+#Génération des aliens
+"""
+On génère une grille d'alien de alien_ligne x alien_colonne
+Puis on enregistre ces coordonnées dans un tableau que l'on passer à l'objet ennemie
+"""
+alien_ligne=4
+alien_colonne=8
+alien_array=[]
+
+for i in range(alien_ligne):
+    for j in range(alien_colonne):
+        y=int(300/alien_ligne)*i+20
+        x=int(500/alien_colonne)*j+100
+        alien_array.append([x,y])
+
+ennemies=alien(alien_array,canvas=Canevas,window=MaFenetre)
+ennemies.move(20,10)
 
 unIlot = cIlot(Canevas = Canevas)
 
-unVaisseau.init2(alien_1,alien_2,unIlot)
+unVaisseau.init2(alien_array,unIlot)
 
 Canevas.bind('<Left>',unVaisseau.deplacer)
 Canevas.bind('<Right>',unVaisseau.deplacer)
