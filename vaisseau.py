@@ -1,9 +1,10 @@
 '''auteur : Elisa
 Date : 4 janvier
-To do : faire communiquer les fichiers'''
+To do : faire communiquer les fichiers tuer les aliens'''
 
 from tkinter import Tk, Canvas, Button, PhotoImage, Frame, Menu
 from alien import alien
+from ilots import cIlot
 
 class cVaisseau :
     def __init__(self,Canevas,width):
@@ -17,7 +18,6 @@ class cVaisseau :
 
     def deplacer (self, event):
         touche = event.keysym
-        print(touche)
         #Allez à droite...
         if touche == "Right":
             #...si on n'est pas deja trop à droite
@@ -49,15 +49,16 @@ class cVaisseau :
         touche = event.keysym
         if touche == "space" :
             projectile = cProjectile(posx = self.MaFenetre_pos_x , posy = self.MaFenetre_pos_y,Canevas = self.canvas)
-            projectile.move(event,self.alien1,self.alien2)
+            projectile.move(event,self.alien1,self.alien2,self.ilot)
             #projectile.move(event,self.alien2)
     
     def death(self):
         self.canvas.delete(self.rect_vaisseau)
 
-    def init2(self,alien1,alien2):
+    def init2(self,alien1,alien2,ilot):
         self.alien1 = alien1
         self.alien2 = alien2
+        self.ilot = ilot
 
 class cProjectile :
     def __init__(self,posx,posy,Canevas) :
@@ -67,18 +68,37 @@ class cProjectile :
 
         #Création projectile
         self.rect_projectile = self.canvas.create_rectangle(self.MaFenetre_posx - 5, self.MaFenetre_posy - 5, self.MaFenetre_posx + 5, self.MaFenetre_posy + 5, fill = 'yellow')
+
     
-    def move (self,event,ennemi1,ennemi2) :
+    def move (self,event,ennemi1,ennemi2, ilot) :
         self.MaFenetre_posy -= 10
         if self.MaFenetre_posy < 0 :
             self.canvas.delete(self.rect_projectile) 
+
         if ennemi1.fen_pos_x == self.MaFenetre_posx and ennemi1.fen_pos_y == self.MaFenetre_posy :
             self.canvas.delete(self.rect_projectile)
             self.canvas.delete(ennemi1.rect_alien)
             print("le 1 touché")
+
         if ennemi2.fen_pos_x == self.MaFenetre_posx and ennemi2.fen_pos_y == self.MaFenetre_posy :
             self.canvas.delete(self.rect_projectile)
             self.canvas.delete(ennemi2.rect_alien)
             print("le 2 touché")
+
+        if self.MaFenetre_posy == ilot.posy1 + 30 and ilot.abscisse11 < self.MaFenetre_posx < ilot.abscisse12 :
+            print("ilot central touché")
+            self.canvas.delete(self.rect_projectile) 
+            ilot.change_color1(1)
+        
+        if self.MaFenetre_posy == ilot.posy2 + 30 and ilot.abscisse21 < self.MaFenetre_posx < ilot.abscisse22 :
+            print("ilot gauche touché")
+            self.canvas.delete(self.rect_projectile) 
+            ilot.change_color1(2)
+
+        if self.MaFenetre_posy == ilot.posy3 + 30 and ilot.abscisse31 < self.MaFenetre_posx < ilot.abscisse32 :
+            print("ilot droit touché")
+            self.canvas.delete(self.rect_projectile) 
+            ilot.change_color1(3)
+
         self.canvas.coords(self.rect_projectile, self.MaFenetre_posx - 5, self.MaFenetre_posy - 5, self.MaFenetre_posx + 5, self.MaFenetre_posy + 5)
-        self.canvas.after(15,lambda:self.move(event,ennemi1,ennemi2))
+        self.canvas.after(15,lambda:self.move(event,ennemi1,ennemi2,ilot))

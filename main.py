@@ -6,6 +6,7 @@ from tkinter import Tk, Canvas, Button, PhotoImage, Frame, Menu
 from a_propos import about
 from alien import alien
 from vaisseau import cVaisseau
+from ilots import cIlot
 
 #Création de la fenêtre principale
 MaFenetre = Tk()
@@ -39,7 +40,9 @@ alien_1.move(dX,dY,0)
 alien_2=alien(line=2,column=1,canvas=Canevas,window=MaFenetre,width=width,height=height,dim=dim,vaisseau=unVaisseau)
 alien_2.move(dX,dY,0)
 
-unVaisseau.init2(alien_1,alien_2)
+unIlot = cIlot(Canevas = Canevas)
+
+unVaisseau.init2(alien_1,alien_2,unIlot)
 
 Canevas.bind('<Left>',unVaisseau.deplacer)
 Canevas.bind('<Right>',unVaisseau.deplacer)
