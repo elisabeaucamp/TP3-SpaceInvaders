@@ -26,7 +26,7 @@ la fonction move permet de déplacer l'objet sur le canvas
 """
 
 #from tkinter import Tk,Canvas
-from endgame import end_game
+#from endgame import end_game
 
 class alien:
     def __init__(self,line,column,canvas,window,width,height,dim,vaisseau):
