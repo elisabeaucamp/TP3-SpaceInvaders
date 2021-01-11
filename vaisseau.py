@@ -82,7 +82,7 @@ class cVaisseau :
     def tir(self,event) :
         touche = event.keysym
         if touche == "space" :
-            projectile = cProjectile(posx = self.MaFenetre_pos_x , posy = self.MaFenetre_pos_y,Canevas = self.canvas)
+            projectile = cProjectile(posx = self.MaFenetre_pos_x , posy = self.MaFenetre_pos_y,Canevas = self.canvas,rect_vaisseau=self.rect_vaisseau)
             projectile.move(event,self.alien,self.ilot)
             #projectile.move(event,self.alien2)
     
@@ -94,10 +94,11 @@ class cVaisseau :
         self.ilot = ilot
 
 class cProjectile :
-    def __init__(self,posx,posy,Canevas) :
+    def __init__(self,posx,posy,Canevas,rect_vaisseau) :
         self.MaFenetre_posx = posx
         self.MaFenetre_posy = posy
         self.canvas = Canevas
+        self.rect_vaisseau = rect_vaisseau
 
         #Création projectile
         self.rect_projectile = self.canvas.create_rectangle(self.MaFenetre_posx - 5, self.MaFenetre_posy - 5, self.MaFenetre_posx + 5, self.MaFenetre_posy + 5, fill = 'yellow')
@@ -111,14 +112,22 @@ class cProjectile :
             self.canvas.delete(self.rect_projectile)
             return #on arrête l'exécution de la fonction car le projectile n'existe plus
 
-        #détection d'une collision entre un alien et un projectile
-        for i in range(len(alien)): #on vérifie pour chaque alien
-            if alien[i][0] < self.MaFenetre_posx < alien[i][0]+20 and alien[i][1] < self.MaFenetre_posy < alien[i][1]+20 and alien[i][3]==1:
-                #suppression de l'alien et mise à 0 de son indice dans le tableau
-                self.canvas.delete(alien[i][2])
-                alien[i][3]=0
-                self.canvas.delete(self.rect_projectile)
-                return #on arrête l'exécution de la fonction car le projectile n'existe plus
+        #vérification d'une colision avec un item sur le canvas
+        colision = list(self.canvas.find_overlapping(self.MaFenetre_posx-5,self.MaFenetre_posy-5,self.MaFenetre_posx+5,self.MaFenetre_posy+5))
+        #récupération des item avec un tag 'ennemie'
+        ennemie = self.canvas.find_withtag('ennemie')
+        
+        if colision: #on vérifie que la liste n'est pas vide
+            for i in range(len(colision)):
+                if colision[i] in list(ennemie): #on vérifie que l'objet en colision l'est avec un ennemie
+                    for j in range(len(alien)):
+                        if colision[i] in alien[j] and alien[j][3]==1: #permet de trouver quelle ligne du tableau correspond à l'ennemie touché
+                            #supression de l'ennemie sur le canvas et passage à l'état mort dans le tableau d'ennemies
+                            self.canvas.delete(colision[i])
+                            alien[j][3]=0
+                    #suppression du projectile
+                    self.canvas.delete(self.rect_projectile)
+                    return #on arrête l'exécution de la fonction move
 
         if self.MaFenetre_posy == ilot.posy1 + 30 and ilot.abscisse11 < self.MaFenetre_posx < ilot.abscisse12 :
             print("ilot central touché")

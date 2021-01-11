@@ -33,6 +33,8 @@ class alien:
         #Boucle permettant d'enregistrer l'adresse de l'objet rectangle et l'état de l'alien (mort ou vivant)
         for i in range(len(self.alien_array)):
             rect=self.canvas.create_rectangle(self.alien_array[i][0],self.alien_array[i][1],self.alien_array[i][0]+self.dim,self.alien_array[i][1]+self.dim, fill = 'red')
+            #on ajoute un tag 'ennemie' à tous les alie : utile pour les colisions
+            self.canvas.addtag_closest('ennemie',self.alien_array[i][0],self.alien_array[i][1])
             self.alien_array[i].append(rect)
             self.alien_array[i].append(1)
 
