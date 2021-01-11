@@ -1,6 +1,6 @@
 '''auteur : Elisa
 Date : 11 janvier 2021
-To do : modif ilots'''
+To do : correction collision alien'''
 
 #from tkinter import Tk, Canvas, Button, PhotoImage, Frame, Menu
 #from alien import alien
