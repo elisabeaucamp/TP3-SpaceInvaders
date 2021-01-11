@@ -13,9 +13,9 @@ To do :
 """
 
 from tkinter import Tk
-from accueil import accueil
+from interaces import accueil
 
-#Création de la fenêtre principale
+#Création de la fenêtre
 MaFenetre = Tk()
 MaFenetre.title("Space Invaders")
 width = 800
