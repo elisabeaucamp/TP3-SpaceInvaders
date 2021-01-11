@@ -1,6 +1,40 @@
-'''auteur : Elisa
+"""
+Auteur : Elisa
 Date : 11 janvier 2021
-To do : correction collision alien'''
+
+=========================
+cVaisseau : 
+objet du vaisseau permettant le déplacement et le tire du vaisseau
+Attribus :
+    - Mafenetre_pos_x : position x du vaisseau
+    - Mafenetre_pos_y : position y du vaisseau
+    - canvas : canvas dans lequel se trouve le vaisseau
+    - width : largeur de la fenêtre
+    - rect_vaisseau : objet rectangle du vaisseau
+Fonctions :
+    - deplacer : permet de déplacer à gauche ou à droite le vaisseau en fonction respectivement
+      des flèches de gauche ou de droite
+    - getPosX : permet de récupérer la coordonnée x du vaisseau
+    - getPosY : permet de récupérer la coordonnée y du vaisseau
+    - tir : permet de générer un projectile lors de la pression de la bar espace
+    - death : supprime le vaisseau et lance le 'game over'
+    - init2 : permet de récupérer les coordonnées des aliens et des ilots
+
+=========================
+cProjectile :
+objet projectile se déplaceant vers le haut de la fenêtre.
+Attribus :
+    - MaFenetre_pos_x : position x du projectile
+    - MaFenetre_pos_y : position y du projectile
+    - canvas : canvas dans lequel se trouve le projectile
+    - rect_projectile : objet rectangle du projectile
+Fonction :
+    - move : permet de bouger le projectile vers le haut
+      la fonction détecte aussi une colision avec un alien ou un ilot
+
+=========================
+To do : correction collision alien, lancer fin de la partie
+"""
 
 #from tkinter import Tk, Canvas, Button, PhotoImage, Frame, Menu
 #from alien import alien

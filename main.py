@@ -1,6 +1,16 @@
-'''auteur : Elisa
-Date : 14 décembre
-To do : création du projectile au bon endroit tant qu'on n'a pas appuyé sur espace'''
+"""
+Auteur : Elisa
+Date : 11 Janvier 2021
+
+=========================
+Programme principale, permet le lancement de la fenêtre du jeux
+
+=========================
+To do : 
+    - Ajout d'un game over
+    - Ajout d'un start
+    - Affichage d'un score
+"""
 
 from tkinter import Tk, Canvas, Button, PhotoImage, Frame, Menu
 from a_propos import about

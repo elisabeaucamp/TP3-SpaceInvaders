@@ -1,8 +1,13 @@
 """
 Auteur : Mathurin LEMARIE
 Date : 11/01/2021
+
+=========================
 Cette fonction permet d'afficher le contenu la fenêtre 'à propos' lorsque l'on clique sur celle-ci
 dans : menu --> à propos
+
+=========================
+To do : modification du texte
 """
 
 from tkinter import Tk, Label

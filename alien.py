@@ -2,6 +2,7 @@
 Auteur : Mathurin LEMARIE
 Date : 11/01/2021
 
+=========================
 Objet alien :
 Permet de créer la grille d'alien ennemie
 Attribues : 
@@ -11,10 +12,12 @@ Attribues :
         - indice 2 : adresse de l'objet rectangle dans le canvas
         - indice 3 : indique l'état de l'alien dans le jeux : 1 si en vie, 0 si mort
     - canvas : canvas dans lequel on génère les aliens
-    - window : fenêtre dans laquelle on génère le canvas
-    
+    - window : fenêtre dans laquelle on génère le canvas    
 Fonction : 
     - move : fait bouger toute les 3 secondes les alien de dX sur le côté et de dY vers le bas
+
+=========================
+To do : détection d'un game over
 """
 
 #from tkinter import Tk, Canvas, Button, PhotoImage, Frame, Menu
