@@ -7,7 +7,7 @@ Description : ensemble des fonction permettant de changer l'interface de la fen�
 Fonctions : 
     - acceuil : affiche la fenêtre d'accueil dans laquelle se trouve : 
         - Un bouton de lancement du jeux (dans Frame_accueil)
-        - Un bouton pour quitter le jeux (dans Frame_accueil)
+        - Un bouton pour quitter le programme (dans Frame_accueil)
         - Un menu dans lequel il y a un bouton pour quitter et 
           un bouton 'a propos' affichant une fenêtre
         - Entrée : MaFenetre : adresse de la fenêtre dans laquelle se trouve l'interface
@@ -15,7 +15,7 @@ Fonctions :
     
     - game : fenêtre du jeux dans laquelle se trouve :
         - L'interface du jeux (Frame1)
-        - Un bouton quitter (Frame2)
+        - Un bouton quitter le jeux et retourner à l'accueil (Frame2)
         - Un menu avec 'quitter' et 'à propos'
         - Entrées :
             - MaFenetre : adresse de la fenêtre de l'interface
@@ -87,6 +87,8 @@ def game(MaFenetre,Frame_accueil,width,height):
     
     BoutonQuitter = Button(Frame2,width=10,text='Quitter',command=lambda:quitter(MaFenetre,Frame1,Frame2,width,height))
     BoutonQuitter.pack()
+    BoutonQuitter = Button(Frame2,width=10,text='Lancer le jeux',command=lambda:start(Canevas,MaFenetre,width))
+    BoutonQuitter.pack()
     
     #Image de fond du jeux
     photo = PhotoImage(file='Images/Terre.gif')
@@ -95,8 +97,18 @@ def game(MaFenetre,Frame_accueil,width,height):
     Canevas.photo = photo #on conserve la photo de l'image
     Canevas.create_image(-130,620,anchor='sw',image=photo)
     Canevas.focus_set()
-    unVaisseau=cVaisseau(Canevas=Canevas,width=width)
+    Canevas.pack()
     
+    
+def quitter(MaFenetre,Frame1,Frame2,width,height):
+    Frame1.pack_forget()
+    Frame2.pack_forget()
+    accueil(MaFenetre)
+
+def game_over(MaFenetre):
+    print("Game Over")
+    
+def start(Canevas,MaFenetre,width):
     #Génération des aliens
     """
     On génère une grille d'alien de alien_ligne x alien_colonne
@@ -108,7 +120,7 @@ def game(MaFenetre,Frame_accueil,width,height):
     #génération du tableau
     for i in range(alien_ligne):
         for j in range(alien_colonne):
-            y=int(300/alien_ligne)*i+20
+            y=int(300/alien_ligne)*i+120
             x=int(500/alien_colonne)*j+100
             alien_array.append([x,y])
     
@@ -116,6 +128,7 @@ def game(MaFenetre,Frame_accueil,width,height):
     ennemies=alien(alien_array,canvas=Canevas,window=MaFenetre)
     ennemies.move(20,10)
     #génération des ilots et du vaisseau
+    unVaisseau=cVaisseau(Canevas=Canevas,width=width)
     unIlot = cIlot(Canevas = Canevas)
     unVaisseau.init2(alien_array,unIlot)
     
@@ -123,12 +136,3 @@ def game(MaFenetre,Frame_accueil,width,height):
     Canevas.bind('<Left>',unVaisseau.deplacer)
     Canevas.bind('<Right>',unVaisseau.deplacer)
     Canevas.bind('<space>',unVaisseau.tir)
-    Canevas.pack()
-    
-def quitter(MaFenetre,Frame1,Frame2,width,height):
-    Frame1.pack_forget()
-    Frame2.pack_forget()
-    accueil(MaFenetre)
-
-def game_over():
-    print("GAME OVER")
