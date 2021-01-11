@@ -39,8 +39,7 @@ Frame2.pack(side='left',padx=10,pady=10)
 
 #Création d'un widget canvas
 Canevas = Canvas(Frame1, height = height, width = width)
-item = Canevas.create_image(0,0, anchor = 'sw', image = photo)
-print('Image de fond(item', item,")")
+Canevas.create_image(-140,600, anchor = 'sw', image=photo)
 Canevas.focus_set()
 unVaisseau = cVaisseau(Canevas=Canevas,width=width)
 
