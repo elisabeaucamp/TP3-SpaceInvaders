@@ -1,8 +1,8 @@
 '''auteur : Elisa
 Date : 11 janvier 2021
-To do : supprimer les ilots'''
+To do : modif ilots'''
 
-from tkinter import Tk, Canvas, Button, PhotoImage, Frame, Menu
+#from tkinter import Tk, Canvas, Button, PhotoImage, Frame, Menu
 #from alien import alien
 from ilots import cIlot
 
