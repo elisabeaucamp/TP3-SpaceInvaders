@@ -27,7 +27,7 @@ def game(MaFenetre,Frame_accueil,width,height):
     #Création d'un widget canvas
     Canevas=Canvas(Frame1,height=height,width=width)
     Canevas.photo = photo #on conserve la photo de l'image
-    Canevas.create_image(-140,600,anchor='sw',image=photo)
+    Canevas.create_image(-130,620,anchor='sw',image=photo)
     Canevas.focus_set()
     unVaisseau=cVaisseau(Canevas=Canevas,width=width)
     
