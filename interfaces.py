@@ -1,19 +1,53 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
-Created on Mon Jan 11 15:48:34 2021
+Auteur : Mathurin LEMARIE
+Date : 11/01/2021
 
-@author: lemarie
+=========================
+Description : ensemble des fonction permettant de changer l'interface de la fenêtre
+Fonctions : 
+    - acceuil : affiche la fenêtre d'accueil dans laquelle se trouve : 
+        - Un bouton de lancement du jeux (dans Frame_accueil)
+        - Un bouton pour quitter le jeux (dans Frame_accueil)
+        - Un menu dans lequel il y a un bouton pour quitter et 
+          un bouton 'a propos' affichant une fenêtre
+        - Entrée : MaFenetre : adresse de la fenêtre dans laquelle se trouve l'interface
+        - Cette fonction ne retourne aucunes sorties.
+    
+    - game : fenêtre du jeux dans laquelle se trouve :
+        - L'interface du jeux (Frame1)
+        - Un bouton quitter (Frame2)
+        - Un menu avec 'quitter' et 'à propos'
+        - Entrées :
+            - MaFenetre : adresse de la fenêtre de l'interface
+            - Frame_accueil : adresse de la frame dans lauqelle se trouvait l'interface d'accueil
+              permet de la supprimer au début de cette fonction
+            - height,width : respectivement hauteur et largeur de la fenêtre de jeux
+        - Cette fonction ne retourne aucunes sorties.
+    
+    - quitter : fonction permettant de retourner à la page d'accueil
+        - Entrées : 
+            - MaFenetre : adresse de la fenêtre de l'interface
+            - Frame1,Frame2 : respectivement la frame de l'interface du jeux et la frame dans lauqelle
+              se trouve le bouton quitter pendant le jeux
+            - height,width : respectivement hauteur et largeur de la fenêtre de jeux
+        - Cette fonction ne retourne aucunes sorties.
+
+=========================
+To do : faire la fonction game_over()
 """
 
-from tkinter import Tk, Canvas, Button, PhotoImage, Frame, Menu, Label
+from tkinter import Canvas, Button, PhotoImage, Frame, Menu, Label
 from a_propos import about
 from alien import alien
 from vaisseau import cVaisseau
 from ilots import cIlot
 
 
-def accueil(MaFenetre,width,height):
+def accueil(MaFenetre):
+    
+    #Largeur et hauteur de la fenêtre de jeux    
+    width = 800
+    height = 500
     
     """MENU PRINCIPAL"""
     Frame_accueil = Frame(MaFenetre,relief='groove',bg='grey')
@@ -40,6 +74,7 @@ def accueil(MaFenetre,width,height):
 
 
 def game(MaFenetre,Frame_accueil,width,height):
+    #Suppression de la frame de la page d'accueil
     Frame_accueil.pack_forget()
     """LANCEMENT DU JEUX"""
     # creation d'un widget Frame dans la fenetre principale
@@ -93,7 +128,7 @@ def game(MaFenetre,Frame_accueil,width,height):
 def quitter(MaFenetre,Frame1,Frame2,width,height):
     Frame1.pack_forget()
     Frame2.pack_forget()
-    accueil(MaFenetre,width,height)
+    accueil(MaFenetre)
 
 def game_over():
     print("GAME OVER")

@@ -33,7 +33,7 @@ Fonction :
       la fonction détecte aussi une colision avec un alien ou un ilot
 
 =========================
-To do : correction collision alien, lancer fin de la partie
+To do : détecter une victoire potentielle
 """
 
 #from tkinter import Tk, Canvas, Button, PhotoImage, Frame, Menu

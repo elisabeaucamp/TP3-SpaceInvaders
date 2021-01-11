@@ -3,8 +3,9 @@ Auteur : Elisa
 Date : 11 Janvier 2021
 
 =========================
-Programme principale, permet le lancement de la fenêtre du jeux
-
+Programme principale, permet le lancement du jeux
+On génère simplement la fenêtre de jeux, puis on appelle la fonction accueil permettant
+d'afficher la fenêtre d'accueil du jeux
 =========================
 To do : 
     - Ajout d'un game over
@@ -18,7 +19,5 @@ from interfaces import accueil
 #Création de la fenêtre
 MaFenetre = Tk()
 MaFenetre.title("Space Invaders")
-width = 800
-height = 500
 
-accueil(MaFenetre,width,height)
+accueil(MaFenetre)
