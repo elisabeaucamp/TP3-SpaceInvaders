@@ -40,7 +40,7 @@ def accueil(MaFenetre,width,height):
 
 
 def game(MaFenetre,Frame_accueil,width,height):
-    Frame_accueil.destroy()
+    Frame_accueil.pack_forget()
     """LANCEMENT DU JEUX"""
     # creation d'un widget Frame dans la fenetre principale
     Frame1 = Frame(MaFenetre,relief='groove', bg = 'grey')
@@ -91,6 +91,9 @@ def game(MaFenetre,Frame_accueil,width,height):
     Canevas.pack()
     
 def quitter(MaFenetre,Frame1,Frame2,width,height):
-    Frame1.destroy()
-    Frame2.destroy()
+    Frame1.pack_forget()
+    Frame2.pack_forget()
     accueil(MaFenetre,width,height)
+
+def game_over():
+    print("GAME OVER")

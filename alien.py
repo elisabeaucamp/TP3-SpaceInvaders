@@ -20,8 +20,6 @@ Fonction :
 To do : détection d'un game over
 """
 
-#from tkinter import Tk, Canvas, Button, PhotoImage, Frame, Menu
-
 class alien:
     def __init__(self,alien_array,canvas,window):
         self.alien_array = alien_array
@@ -59,10 +57,12 @@ class alien:
                 self.alien_array[i][1]+=dY
             
             self.canvas.coords(self.alien_array[i][2],self.alien_array[i][0],self.alien_array[i][1],self.alien_array[i][0]+self.dim,self.alien_array[i][1]+self.dim)
+            if self.alien_array[i][1]+self.dim > 370:
+                print("Game Over")
 
         #remise à 9 du compteur d'allé retour
         if self.tour==2:
             self.tour=0
 
         #rebouclage de la fonction toutes les 3 secondes
-        self.window.after(3000,lambda:self.move(dX,dY))
+        self.window.after(2500,lambda:self.move(dX,dY))

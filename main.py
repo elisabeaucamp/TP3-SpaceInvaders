@@ -13,7 +13,7 @@ To do :
 """
 
 from tkinter import Tk
-from interaces import accueil
+from interfaces import accueil
 
 #Création de la fenêtre
 MaFenetre = Tk()
