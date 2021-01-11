@@ -121,15 +121,15 @@ class cProjectile :
         
         if colision: #on vérifie que la liste n'est pas vide
             for i in range(len(colision)):
-                if colision[i] in list(ennemie): #on vérifie que l'objet en colision l'est avec un ennemie
+                if colision[i] in list(ennemie): #on vérifie que l'item en colision a bien me tag 'ennemie'
                     for j in range(len(alien)):
-                        if colision[i] in alien[j] and alien[j][3]==1: #permet de trouver quelle ligne du tableau correspond à l'ennemie touché
+                        if colision[i] == alien[j][2] and alien[j][3]==1: #permet de trouver quelle ligne du tableau correspond à l'ennemie touché
                             #supression de l'ennemie sur le canvas et passage à l'état mort dans le tableau d'ennemies
                             self.canvas.delete(colision[i])
                             alien[j][3]=0
-                    #suppression du projectile
-                    self.canvas.delete(self.rect_projectile)
-                    return #on arrête l'exécution de la fonction move
+                            #suppression du projectile
+                            self.canvas.delete(self.rect_projectile)
+                            return #on arrête l'exécution de la fonction move
                 
                 if colision[i] in list(ilotag) :
                     self.canvas.delete(self.rect_projectile)
