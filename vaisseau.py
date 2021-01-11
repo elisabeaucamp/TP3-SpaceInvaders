@@ -116,6 +116,8 @@ class cProjectile :
         colision = list(self.canvas.find_overlapping(self.MaFenetre_posx-5,self.MaFenetre_posy-5,self.MaFenetre_posx+5,self.MaFenetre_posy+5))
         #récupération des item avec un tag 'ennemie'
         ennemie = self.canvas.find_withtag('ennemie')
+        #récupération des items avec un tag 'ilot'
+        ilotag = self.canvas.find_withtag('ilot')
         
         if colision: #on vérifie que la liste n'est pas vide
             for i in range(len(colision)):
@@ -128,41 +130,17 @@ class cProjectile :
                     #suppression du projectile
                     self.canvas.delete(self.rect_projectile)
                     return #on arrête l'exécution de la fonction move
-
-        #détection des collisions projectile et ilot 1
-        if self.MaFenetre_posy == ilot.posy1 + 30 and ilot.abscisse11 < self.MaFenetre_posx < ilot.abscisse12 :
-            print("ilot central touché")
-            self.canvas.delete(self.rect_projectile) #destruction projectile
-            if ilot.returncolor(1) == 'blue' : #detection couleur 
-                ilot.change_color1(1) #changement de couleur au premier tir
-            elif ilot.returncolor(1) == 'purple' :
-                ilot.change_color2(1) #changement de couleur au 2e tir
-            elif ilot.returncolor(1) == 'black' :
-                self.canvas.delete(ilot.rect_ilot1) #destruction de l'ilot au 3e tir
-            return
-
-        #meme schéma pour les 2 autres ilots
-        if self.MaFenetre_posy == ilot.posy2 + 30 and ilot.abscisse21 < self.MaFenetre_posx < ilot.abscisse22 :
-            print("ilot gauche touché")
-            self.canvas.delete(self.rect_projectile)
-            if ilot.returncolor(2) == 'blue' :
-                ilot.change_color1(2)
-            elif ilot.returncolor(2) == 'purple' :
-                ilot.change_color2(2)
-            elif ilot.returncolor(2) == 'black' :
-                self.canvas.delete(ilot.rect_ilot2)
-            return
-
-        if self.MaFenetre_posy == ilot.posy3 + 30 and ilot.abscisse31 < self.MaFenetre_posx < ilot.abscisse32 :
-            print("ilot droit touché")
-            self.canvas.delete(self.rect_projectile)
-            if ilot.returncolor(3) == 'blue' :
-                ilot.change_color1(3)
-            elif ilot.returncolor(3) == 'purple' :
-                ilot.change_color2(3)
-            elif ilot.returncolor(3) == 'black' :
-                self.canvas.delete(ilot.rect_ilot3)
-            return
+                
+                if colision[i] in list(ilotag) :
+                    self.canvas.delete(self.rect_projectile)
+                    if ilot.returncolor(colision[i]) == 'blue' :
+                        ilot.change_color1(colision[i])
+                    elif ilot.returncolor(colision[i]) == 'purple' :
+                        ilot.change_color2(colision[i])
+                    elif ilot.returncolor(colision[i]) == 'black' :
+                        self.canvas.delete(colision[i])
+                    return
+                
 
         self.canvas.coords(self.rect_projectile, self.MaFenetre_posx - 5, self.MaFenetre_posy - 5, self.MaFenetre_posx + 5, self.MaFenetre_posy + 5)
         self.canvas.after(15,lambda:self.move(event,alien,ilot))

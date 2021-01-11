@@ -27,30 +27,35 @@ class cIlot :
         self.abscisse31 = self.posx3 - 30
         self.abscisse32 = self.posx3 + 30
 
+        #creation tag
+        self.canvas.addtag_closest('ilot', 400, 400)
+        self.canvas.addtag_closest('ilot', 200, 400)
+        self.canvas.addtag_closest('ilot', 600, 400)
+
     #change la couleur de l'ilot de blue à purple
     def change_color1(self,numilot) :
-        if numilot == 1 :
+        if numilot == self.rect_ilot1 :
             self.canvas.itemconfig(self.rect_ilot1, fill = 'purple')
-        if numilot == 2 :
+        if numilot == self.rect_ilot2 :
             self.canvas.itemconfig(self.rect_ilot2, fill = 'purple')
-        if numilot == 3 :
+        if numilot == self.rect_ilot3 :
             self.canvas.itemconfig(self.rect_ilot3, fill = 'purple')
 
     #change la couleur de l'ilot de purple à black
     def change_color2(self,numilot) :
-        if numilot == 1 :
+        if numilot == self.rect_ilot1 :
             self.canvas.itemconfig(self.rect_ilot1, fill = 'black')
-        if numilot == 2 :
+        if numilot == self.rect_ilot2 :
             self.canvas.itemconfig(self.rect_ilot2, fill = 'black')
-        if numilot == 3 :
+        if numilot == self.rect_ilot3 :
             self.canvas.itemconfig(self.rect_ilot3, fill = 'black')
 
     #retourne la couleur actuelle de l'ilot
     def returncolor(self,numilot) :
-        if numilot == 1 :
+        if numilot == self.rect_ilot1 :
             color = self.canvas.itemcget(self.rect_ilot1, "fill")
-        if numilot == 2 :
+        if numilot == self.rect_ilot2 :
             color = self.canvas.itemcget(self.rect_ilot2, "fill")
-        if numilot == 3 :
+        if numilot == self.rect_ilot3 :
             color = self.canvas.itemcget(self.rect_ilot3, "fill")
         return color
