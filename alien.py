@@ -60,6 +60,7 @@ class alien:
             if self.alien_array[i][1]+self.dim > 370:
                 from interfaces import game_over
                 game_over(self.window)
+                return #on arrêtre l'exécution de la fonction
 
         #remise à 9 du compteur d'allé retour
         if self.tour==2:
