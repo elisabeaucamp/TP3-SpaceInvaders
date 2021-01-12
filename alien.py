@@ -59,7 +59,7 @@ class alien:
             self.canvas.coords(self.alien_array[i][2],self.alien_array[i][0],self.alien_array[i][1],self.alien_array[i][0]+self.dim,self.alien_array[i][1]+self.dim)
             if self.alien_array[i][1]+self.dim > 370:
                 from interfaces import game_over
-                game_over(self.window)
+                game_over(self.canvas)
                 return #on arrêtre l'exécution de la fonction
 
         #remise à 9 du compteur d'allé retour
@@ -67,4 +67,4 @@ class alien:
             self.tour=0
 
         #rebouclage de la fonction toutes les 3 secondes
-        self.window.after(200,lambda:self.move(dX,dY))
+        self.window.after(100,lambda:self.move(dX,dY))

@@ -115,8 +115,11 @@ def quitter(MaFenetre,Frame1,Frame2,width,height,Canevas):
     Frame2.destroy()
     accueil(MaFenetre)
 
-def game_over(MaFenetre):
-    print("Game Over")
+def game_over(canvas):
+    canvas.delete("all")
+    photo = PhotoImage(file='Images/game_over.gif')
+    canvas.photo = photo #on conserve la photo de l'image
+    canvas.create_image(-30,10,anchor='nw',image=photo)
     
 def start(Canevas,ennemies,unVaisseau,unIlot):
     #Lancement du mouvement des ennemies
