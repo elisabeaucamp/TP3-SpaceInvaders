@@ -18,7 +18,7 @@ from alien import alien
 from vaisseau import cVaisseau
 from ilots import cIlot
 
-def generation(canvas,window,width):
+def generation(canvas,window,width,Frame2):
     #Génération des aliens
     """
     On génère une grille d'alien de alien_ligne x alien_colonne
@@ -38,7 +38,7 @@ def generation(canvas,window,width):
     ennemies=alien(alien_array,canvas=canvas,window=window)
 
     #génération des ilots et du vaisseau
-    unVaisseau=cVaisseau(Canevas=canvas,width=width)
+    unVaisseau=cVaisseau(Canevas=canvas,width=width,Frame2 = Frame2)
     unIlot = cIlot(Canevas=canvas)
     
     return ennemies,unVaisseau,unIlot

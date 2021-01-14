@@ -44,9 +44,11 @@ Fonctions :
 To do : faire la fonction game_over()
 """
 
-from tkinter import Canvas, Button, PhotoImage, Frame, Menu, Label
+from tkinter import Canvas, Button, PhotoImage, Frame, Menu, Label, StringVar
 from a_propos import about
 from generation import generation
+from vaisseau import cVaisseau
+from alien import alien
 
 
 def accueil(MaFenetre):
@@ -80,25 +82,11 @@ def accueil(MaFenetre):
 
 
 def game(MaFenetre,Frame_accueil,width,height):
-    #Suppression de la frame de la page d'accueil
-    Frame_accueil.pack_forget()
-    """LANCEMENT DU JEUX"""
-    
+
+
     # creation d'un widget Frame dans la fenetre principale
     Frame1 = Frame(MaFenetre,relief='groove', bg = 'grey')
     Frame1.pack(side='left',padx=10,pady=10)
-    
-    # creation d'un widget Frame dans la fenetre principale
-    Frame2 = Frame(MaFenetre,relief='groove', bg ='pink')
-    Frame2.pack(side='left',padx=20,pady=10)
-    
-    BoutonQuitter = Button(Frame2,width=10,text='Quitter',command=lambda:quitter(MaFenetre,Frame1,Frame2,width,height,Canevas))
-    BoutonQuitter.pack()
-    BoutonQuitter = Button(Frame2,width=10,text='Lancer le jeux',command=lambda:start(Canevas,ennemies,unVaisseau,unIlot))
-    BoutonQuitter.pack()
-    Label_score = Label(Frame2,pady=10,bg='grey',font="Verdana 10",text='Score : ')
-    Label_score.pack()
-    
     #Image de fond du jeux
     photo = PhotoImage(file='Images/Terre.gif')
     #Création d'un widget canvas
@@ -108,7 +96,22 @@ def game(MaFenetre,Frame_accueil,width,height):
     Canevas.focus_set()
     Canevas.pack()
     
-    ennemies,unVaisseau,unIlot = generation(Canevas,MaFenetre,width)
+
+    #Suppression de la frame de la page d'accueil
+    Frame_accueil.pack_forget()
+    """LANCEMENT DU JEUX"""
+    
+    
+    # creation d'un widget Frame dans la fenetre principale
+    Frame2 = Frame(MaFenetre,relief='groove', bg ='pink')
+    Frame2.pack(side='left',padx=20,pady=10)
+    
+    ennemies,unVaisseau,unIlot = generation(Canevas,MaFenetre,width,Frame2)
+
+    BoutonQuitter = Button(Frame2,width=10,text='Quitter',command=lambda:quitter(MaFenetre,Frame1,Frame2,width,height,Canevas))
+    BoutonQuitter.pack()
+    BoutonQuitter = Button(Frame2,width=10,text='Lancer le jeux',command=lambda:start(Canevas,ennemies,unVaisseau,unIlot))
+    BoutonQuitter.pack()
 
 def quitter(MaFenetre,Frame1,Frame2,width,height,Canevas):
     Frame1.destroy()
@@ -126,7 +129,7 @@ def start(Canevas,ennemies,unVaisseau,unIlot):
     ennemies.move(20,10)
     
     #fonction permettant le lien entre vaisseau <-> alien <-> ilots
-    unVaisseau.init2(ennemies.alien_array,unIlot)
+    unVaisseau.init2(ennemies.alien_array,unIlot,unVaisseau)
     
     #bind des touches pour le vaisseau
     Canevas.bind('<Left>',unVaisseau.deplacer)
