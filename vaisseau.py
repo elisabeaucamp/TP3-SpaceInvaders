@@ -36,10 +36,8 @@ Fonction :
 To do : détecter une victoire potentielle
 """
 
-#from tkinter import Tk, Canvas, Button, PhotoImage, Frame, Menu
-#from alien import alien
 from ilots import cIlot
-from tkinter import StringVar, Label
+from tkinter import StringVar, Label, PhotoImage
 
 class cVaisseau :
     def __init__(self,Canevas,width,Frame2):
@@ -49,10 +47,14 @@ class cVaisseau :
         self.width = width
         self.score = StringVar()
         self.score.set('score : 0')
-        self.label = Label(Frame2,pady=10,bg='grey',font="Verdana 10",textvariable= self.score)
+        self.label = Label(Frame2,pady=10,bg='pink',font="Verdana 10",textvariable= self.score)
         self.label.pack()
         #création du vaisseau
         self.rect_vaisseau = self.canvas.create_rectangle(self.MaFenetre_pos_x - 45, self.MaFenetre_pos_y - 10, self.MaFenetre_pos_x + 45, self.MaFenetre_pos_y + 10, fill = 'red')
+
+        #self.img_vaisseau = PhotoImage(file='Images/vaisseau.jpeg')
+        #self.rect_vaisseau = self.canvas.create_image(self.MaFenetre_pos_x,self.MaFenetre_pos_y, image = self.img_vaisseau)
+
 
     def deplacer (self, event):
         touche = event.keysym
