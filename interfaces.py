@@ -56,6 +56,7 @@ def accueil(MaFenetre):
     #Largeur et hauteur de la fenêtre de jeux    
     width = 800
     height = 500
+    lst_vie = []
     
     """MENU PRINCIPAL"""
     Frame_accueil = Frame(MaFenetre,relief='groove',bg='grey')
@@ -65,7 +66,7 @@ def accueil(MaFenetre):
     BoutonQuitter = Button(Frame_accueil,width=10,text='Quitter',command=MaFenetre.destroy)
     BoutonQuitter.pack(pady=20)
     #Création d'un bouton Start
-    BoutonStart = Button(Frame_accueil,width=10,text ='Nouvelle partie',command=lambda:game(MaFenetre,Frame_accueil,width,height))
+    BoutonStart = Button(Frame_accueil,width=10,text ='Nouvelle partie',command=lambda:game(MaFenetre,Frame_accueil,width,height,lst_vie))
     BoutonStart.pack(pady=20)
     #ajout de la frame sur la fenêtre
     Frame_accueil.pack()
@@ -81,7 +82,7 @@ def accueil(MaFenetre):
     MaFenetre.mainloop()
 
 
-def game(MaFenetre,Frame_accueil,width,height):
+def game(MaFenetre,Frame_accueil,width,height,lst_vie):
 
 
     # creation d'un widget Frame dans la fenetre principale
@@ -106,7 +107,7 @@ def game(MaFenetre,Frame_accueil,width,height):
     Frame2 = Frame(MaFenetre,relief='groove', bg ='pink')
     Frame2.pack(side='left',padx=20,pady=10)
     
-    ennemies,unVaisseau,unIlot = generation(Canevas,MaFenetre,width,Frame2)
+    ennemies,unVaisseau,unIlot = generation(Canevas,MaFenetre,width,Frame2,lst_vie)
 
     BoutonQuitter = Button(Frame2,width=10,text='Quitter',command=lambda:quitter(MaFenetre,Frame1,Frame2,width,height,Canevas,ennemies))
     BoutonQuitter.pack()
@@ -127,7 +128,7 @@ def game_over(canvas):
     
 def start(Canevas,ennemies,unVaisseau,unIlot):
     #Lancement du mouvement des ennemies
-    ennemies.move(20,10)
+    ennemies.move(20,10,unIlot,unVaisseau)
     
     #fonction permettant le lien entre vaisseau <-> alien <-> ilots
     unVaisseau.init2(ennemies.alien_array,unIlot,unVaisseau)

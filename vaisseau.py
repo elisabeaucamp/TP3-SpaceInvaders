@@ -40,21 +40,27 @@ from ilots import cIlot
 from tkinter import StringVar, Label, PhotoImage
 
 class cVaisseau :
-    def __init__(self,Canevas,width,Frame2):
+    def __init__(self,Canevas,width,Frame2,lst_vie):
         self.MaFenetre_pos_x = 400
         self.MaFenetre_pos_y = 490
         self.canvas = Canevas
         self.width = width
         self.score = StringVar()
         self.score.set('score : 0')
-        self.label = Label(Frame2,pady=10,bg='pink',font="Verdana 10",textvariable= self.score)
-        self.label.pack()
+        self.label_score = Label(Frame2,pady=10,bg='pink',font="Verdana 10",textvariable= self.score)
+        self.label_score.pack()
+        self.vie = StringVar()
+        self.vie.set('Vies : 3')
+        self.label_vie = Label(Frame2,pady=10,bg='pink',font="Verdana 10",textvariable= self.vie)
+        self.label_vie.pack()
+        self.liste_vie = lst_vie
+
         #création du vaisseau
-        self.rect_vaisseau = self.canvas.create_rectangle(self.MaFenetre_pos_x - 45, self.MaFenetre_pos_y - 10, self.MaFenetre_pos_x + 45, self.MaFenetre_pos_y + 10, fill = 'red')
+        self.img_vaisseau = PhotoImage(file='Images/vaisseau_dimensionne.png')
+        self.rect_vaisseau = self.canvas.create_image(self.MaFenetre_pos_x,self.MaFenetre_pos_y, image = self.img_vaisseau)
 
-        #self.img_vaisseau = PhotoImage(file='Images/vaisseau.jpeg')
-        #self.rect_vaisseau = self.canvas.create_image(self.MaFenetre_pos_x,self.MaFenetre_pos_y, image = self.img_vaisseau)
-
+        #création tag
+        self.canvas.addtag_closest('vaisseau',self.MaFenetre_pos_x,self.MaFenetre_pos_y)
 
     def deplacer (self, event):
         touche = event.keysym
@@ -74,31 +80,43 @@ class cVaisseau :
             #...si on l'est trop
             else : 
                 self.MaFenetre_pos_x -= 0
-        self.canvas.coords(self.rect_vaisseau, self.MaFenetre_pos_x - 45, self.MaFenetre_pos_y - 10, self.MaFenetre_pos_x + 40, self.MaFenetre_pos_y + 10)
+        self.canvas.coords(self.rect_vaisseau, self.MaFenetre_pos_x, self.MaFenetre_pos_y)
 
-    def tir(self,event) :
+    def tir(self,event) : #tir du vaisseau
         touche = event.keysym
-        if touche == "space" :
+        if touche == "space" : #appui barre espace
+            #on crée un objet de la classe projectile
             projectile = cProjectile(posx = self.MaFenetre_pos_x , posy = self.MaFenetre_pos_y,Canevas = self.canvas,rect_vaisseau=self.rect_vaisseau)
+            #on le fait bouger
             projectile.move(event,self.alien,self.ilot,self.vaisseau)
-            #projectile.move(event,self.alien2)
     
     def death(self):
         self.canvas.delete(self.rect_vaisseau)
 
-    def init2(self,alien,ilot,vaisseau):
+    #récuperer le vaisseau l'alien et l'ilot meme s'ils sont créé après l'objet vaisseau dans le PP
+    def init2(self,alien,ilot,vaisseau): 
         self.alien = alien
         self.ilot = ilot
         self.vaisseau = vaisseau
 
+    #calcul du score
     def set_score(self,liste_alien):
         score = 0
-        for k,l in enumerate (liste_alien) :
+        for k,l in enumerate (liste_alien) : #on parcoure la liste des aliens
             length = len(l)
-            nbr_alien = liste_alien[k][length-1]
-            if nbr_alien == 0 :
-                score += 10
+            nbr_alien = liste_alien[k][length-1] #c'est une liste de liste
+            if nbr_alien == 0 : #pour chaque sous-liste, si le dernier chiffre est 0 c'est que l'alien est mort
+                score += 10 #à chaque 0, c'est un alien mort, donc on prend 10 points
         self.score.set('Score : ' + str(score))
+
+    def set_vie(self,lst_vie) :
+        vie_depart = 3
+        vie_actuelle = vie_depart - len(lst_vie)
+        print(vie_actuelle)
+        self.vie.set('Vies : ' + str(vie_actuelle))
+
+
+
 
 class cProjectile :
     def __init__(self,posx,posy,Canevas,rect_vaisseau) :
@@ -128,7 +146,7 @@ class cProjectile :
 
         if colision: #on vérifie que la liste n'est pas vide
             for i in range(len(colision)):
-                if colision[i] in list(ennemie): #on vérifie que l'item en colision a bien me tag 'ennemie'
+                if colision[i] in list(ennemie): #on vérifie que l'item en colision a bien le tag 'ennemie'
                     for j in range(len(alien)):
                         if colision[i] == alien[j][2] and alien[j][3]==1: #permet de trouver quelle ligne du tableau correspond à l'ennemie touché
                             #supression de l'ennemie sur le canvas et passage à l'état mort dans le tableau d'ennemies
@@ -139,13 +157,13 @@ class cProjectile :
                             vaisseau.set_score(alien)
                             return #on arrête l'exécution de la fonction move
                 
-                if colision[i] in list(ilotag) :
+                if colision[i] in list(ilotag) : #on vérifie que le projectile est en colision avec un ilot
                     self.canvas.delete(self.rect_projectile)
-                    if ilot.returncolor(colision[i]) == 'blue' :
+                    if ilot.returncolor(colision[i]) == 'blue' : #si l'ilot est bleu il change de couleur
                         ilot.change_color1(colision[i])
-                    elif ilot.returncolor(colision[i]) == 'purple' :
+                    elif ilot.returncolor(colision[i]) == 'purple' : #deuxième changement de couleur
                         ilot.change_color2(colision[i])
-                    elif ilot.returncolor(colision[i]) == 'black' :
+                    elif ilot.returncolor(colision[i]) == 'black' :#au 3e coup l'ilot se détruit
                         self.canvas.delete(colision[i])
                     return
                 
