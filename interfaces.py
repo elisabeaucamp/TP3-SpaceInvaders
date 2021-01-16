@@ -108,12 +108,13 @@ def game(MaFenetre,Frame_accueil,width,height):
     
     ennemies,unVaisseau,unIlot = generation(Canevas,MaFenetre,width,Frame2)
 
-    BoutonQuitter = Button(Frame2,width=10,text='Quitter',command=lambda:quitter(MaFenetre,Frame1,Frame2,width,height,Canevas))
+    BoutonQuitter = Button(Frame2,width=10,text='Quitter',command=lambda:quitter(MaFenetre,Frame1,Frame2,width,height,Canevas,ennemies))
     BoutonQuitter.pack()
     BoutonQuitter = Button(Frame2,width=10,text='Lancer le jeux',command=lambda:start(Canevas,ennemies,unVaisseau,unIlot))
     BoutonQuitter.pack()
 
-def quitter(MaFenetre,Frame1,Frame2,width,height,Canevas):
+def quitter(MaFenetre,Frame1,Frame2,width,height,Canevas,ennemies):
+    ennemies.stop()
     Frame1.destroy()
     Frame2.destroy()
     accueil(MaFenetre)

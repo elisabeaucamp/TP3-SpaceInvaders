@@ -20,6 +20,8 @@ Fonction :
 To do : détection d'un game over
 """
 
+import random
+
 class alien:
     def __init__(self,alien_array,canvas,window):
         self.alien_array = alien_array
@@ -65,6 +67,13 @@ class alien:
         #remise à 9 du compteur d'allé retour
         if self.tour==2:
             self.tour=0
-
+        
+        shot = random.uniform(1,2)
+        print(shot)
+        
         #rebouclage de la fonction toutes les 3 secondes
-        self.window.after(100,lambda:self.move(dX,dY))
+        #On récupère l'id du after, cela permettra de l'arreter quand on le veux
+        self.after_id_move = self.window.after(2500,lambda:self.move(dX,dY))
+        
+    def stop(self):
+        self.window.after_cancel(self.after_id_move)
