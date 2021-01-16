@@ -30,12 +30,12 @@ def generation(canvas,window,width,Frame2):
     #génération du tableau
     for i in range(alien_ligne):
         for j in range(alien_colonne):
-            y=int(300/alien_ligne)*i+120
+            y=int(300/alien_ligne)*i+20
             x=int(500/alien_colonne)*j+100
             alien_array.append([x,y])
     
     #génération de la grille d'alien
-    ennemies=alien(alien_array,canvas=canvas,window=window)
+    ennemies=alien(alien_array=alien_array,canvas=canvas,window=window)
 
     #génération des ilots et du vaisseau
     unVaisseau=cVaisseau(Canevas=canvas,width=width,Frame2 = Frame2)

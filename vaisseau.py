@@ -99,7 +99,6 @@ class cVaisseau :
             if nbr_alien == 0 :
                 score += 10
         self.score.set('Score : ' + str(score))
-        print(score)
 
 class cProjectile :
     def __init__(self,posx,posy,Canevas,rect_vaisseau) :
