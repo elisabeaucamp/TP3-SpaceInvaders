@@ -114,7 +114,7 @@ def game(MaFenetre,Frame_accueil,width,height):
     BoutonQuitter.pack()
 
 def quitter(MaFenetre,Frame1,Frame2,width,height,Canevas,ennemies):
-    ennemies.stop()
+    ennemies.stop() #on arrete le déplacement des ennemies
     Frame1.destroy()
     Frame2.destroy()
     accueil(MaFenetre)

@@ -35,7 +35,7 @@ def generation(canvas,window,width,Frame2):
             alien_array.append([x,y])
     
     #génération de la grille d'alien
-    ennemies=alien(alien_array,canvas=canvas,window=window)
+    ennemies=alien(alien_array=alien_array,canvas=canvas,window=window)
 
     #génération des ilots et du vaisseau
     unVaisseau=cVaisseau(Canevas=canvas,width=width,Frame2 = Frame2)

@@ -15,6 +15,7 @@ Attribues :
     - window : fenêtre dans laquelle on génère le canvas    
 Fonction : 
     - move : fait bouger toute les 3 secondes les alien de dX sur le côté et de dY vers le bas
+    - stop : cette fonction permet d'arrêter la fonction move() pour arrêter le déplacement des alien
 
 =========================
 To do : détection d'un game over
@@ -70,6 +71,9 @@ class alien:
         
         shot = random.uniform(1,2)
         print(shot)
+        if shot > 1:
+            projectile_alien(alien_array=self.alien_array,canvas=self.canvas,window=self.window,alien_dim=self.dim)
+            print("un shot")
         
         #rebouclage de la fonction toutes les 3 secondes
         #On récupère l'id du after, cela permettra de l'arreter quand on le veux
@@ -77,3 +81,23 @@ class alien:
         
     def stop(self):
         self.window.after_cancel(self.after_id_move)
+    
+class projectile_alien:
+    def __init__(self,alien_array,canvas,window,alien_dim):
+        self.alien_array=alien_array
+        self.canvas=canvas
+        self.window=window
+        self.alien_dim=alien_dim
+        
+        #on prend un alien aléatoire parmis la liste et on récupère ses coordonnées x et y
+        alien_ind = random.randint(0,len(self.alien_array)-1)
+        self.coord_x=self.alien_array[alien_ind][0]
+        self.coord_y=self.alien_array[alien_ind][1]
+        
+        dim=5 #dimension du projectile
+        self.canvas.create_rectangle(self.coord_x+self.alien_dim/2,self.coord_y+self.alien_dim/2,self.coord_x+dim,self.coord_y+dim,fill='blue')
+        self.move(10)
+        
+    def move(self,dY):
+        print("move")
+        self.coord_y += dY
