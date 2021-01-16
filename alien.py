@@ -95,10 +95,8 @@ class alien:
             self.tour=0
         
         shot = random.uniform(1,2)
-        print(shot)
         if shot > 1:
             projectile_alien(alien_array=self.alien_array,canvas=self.canvas,window=self.window,alien_dim=self.dim,ilot=ilot,vaisseau = vaisseau)
-            print("un shot")
         
         #rebouclage de la fonction toutes les 3 secondes
         #On récupère l'id du after, cela permettra de l'arreter quand on le veux
@@ -106,7 +104,7 @@ class alien:
         
     def stop(self):
         self.window.after_cancel(self.after_id_alien)
-    
+
 class projectile_alien:
     def __init__(self,alien_array,canvas,window,alien_dim,ilot,vaisseau):
         self.alien_array=alien_array
@@ -115,13 +113,21 @@ class projectile_alien:
         self.alien_dim=alien_dim
         self.ilot = ilot
         self.vaisseau = vaisseau
-        
-        #on prend un alien aléatoire parmis la liste et on récupère ses coordonnées x et y
-        alien_ind = random.randint(0,len(self.alien_array)-1)
-        self.coord_x=self.alien_array[alien_ind][0]
-        self.coord_y=self.alien_array[alien_ind][1]
-        
         self.proj_dim=10 #dimension du projectile
+        
+        alien_live=[]
+        #on prend un alien aléatoire parmis la liste et on récupère ses coordonnées x et y
+        for i in range(len(self.alien_array)):
+            if self.alien_array[i][3]==1:
+                alien_live.append([self.alien_array[i][0],self.alien_array[i][1]])
+        
+        print(len(alien_live))
+        
+        alien_ind = random.randint(0,len(alien_live)-1)
+        self.coord_x=alien_live[alien_ind][0]
+        self.coord_y=alien_live[alien_ind][1]
+        
+        
         self.proj_rect = self.canvas.create_rectangle(self.coord_x+self.alien_dim/2,self.coord_y+self.alien_dim/2,self.coord_x+self.proj_dim,self.coord_y+self.proj_dim,fill='blue')
         self.move(10,ilot,vaisseau)
         
@@ -140,7 +146,7 @@ class projectile_alien:
         vaisseautag = self.canvas.find_withtag('vaisseau')
 
         if colision :
-            for i in range(len(colision)) :
+            for i in range(len(colision)):
                 if colision[i] in list(ilotag) :
                     self.canvas.delete(self.proj_rect)
                     if ilot.returncolor(colision[i]) == 'blue' : #si l'ilot est bleu il change de couleur
@@ -150,7 +156,7 @@ class projectile_alien:
                     elif ilot.returncolor(colision[i]) == 'black' :#au 3e coup l'ilot se détruit
                         self.canvas.delete(colision[i])
                     return
-                if colision[i] in list(vaisseautag) :
+                if colision[i] in list(vaisseautag):
                     self.canvas.delete(self.proj_rect)
                     self.vaisseau.liste_vie.append(1)
                     vaisseau.set_vie(self.vaisseau.liste_vie)
@@ -162,11 +168,8 @@ class projectile_alien:
                     return
 
 
-
-
-
         self.canvas.coords(self.proj_rect,self.coord_x,self.coord_y,self.coord_x+self.proj_dim,self.coord_y+self.proj_dim)
-        self.after_id_proj = self.window.after(30,lambda:self.move(dY,ilot,vaisseau)) #on récupère l'id de la méthode after pour pouvoir l'utiliser dans le stop
+        self.after_id_proj = self.window.after(20,lambda:self.move(dY,ilot,vaisseau)) #on récupère l'id de la méthode after pour pouvoir l'utiliser dans le stop
 
 
     
