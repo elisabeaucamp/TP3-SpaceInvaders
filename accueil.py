@@ -11,7 +11,7 @@ from a_propos import about
 from game import game
 
 
-def accueil(MaFenetre,width,height):
+def accueil(MaFenetre,width,height,lst_vie):
     """MENU PRINCIPAL"""
     Frame_accueil = Frame(MaFenetre,relief='groove',bg='grey')
     titre = Label(Frame_accueil,bg='grey',font="Verdana 10",text='Bienvenue sur Space invader')
@@ -20,7 +20,7 @@ def accueil(MaFenetre,width,height):
     BoutonQuitter = Button(Frame_accueil,width=10,height=1,text='Quitter',command=MaFenetre.destroy)
     BoutonQuitter.pack(pady=20)
     #Création d'un bouton Start
-    BoutonStart = Button(Frame_accueil,width=10,height=1,text ='Lancer le jeux',command=lambda:game(MaFenetre,Frame_accueil,width,height))
+    BoutonStart = Button(Frame_accueil,width=10,height=1,text ='Lancer le jeux',command=lambda:game(MaFenetre,Frame_accueil,width,height,lst_vie))
     BoutonStart.pack(pady=20)
     #ajout de la frame sur la fenêtre
     Frame_accueil.pack()

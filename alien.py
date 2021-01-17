@@ -184,11 +184,10 @@ class projectile_alien:
                 #colision avec le vaisseau
                 if colision[i] in list(vaisseautag):
                     self.canvas.delete(self.proj_rect)
-                    self.vaisseau.liste_vie.append(1)
-                    vaisseau.set_vie(self.vaisseau.liste_vie)
-                    print(len(self.vaisseau.liste_vie))
-                    if len(self.vaisseau.liste_vie) == 3 :
-                        from interfaces import game_over
+                    self.vaisseau.liste_vie.append(1) #lst_vie se remplit à chaque coup donné
+                    vaisseau.set_vie(self.vaisseau.liste_vie) #lancement de la fonction comptage de vie
+                    if len(self.vaisseau.liste_vie) == 3 : #si la liste à une longueur de 3 (donc 3 coups pris)
+                        from interfaces import game_over #game over
                         game_over(self.canvas,self.jeux)
                         return
                     return

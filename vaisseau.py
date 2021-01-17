@@ -58,6 +58,7 @@ class cVaisseau :
         #création du vaisseau
         self.img_vaisseau = PhotoImage(file='Images/vaisseau_dimensionne.png')
         self.rect_vaisseau = self.canvas.create_image(self.MaFenetre_pos_x,self.MaFenetre_pos_y, image = self.img_vaisseau)
+        #l'image ne devrait pas avoir de fond car l'image téléchargée est un png transparent mais le fond blanc apparaît automatiquement
 
         #création tag
         self.canvas.addtag_closest('vaisseau',self.MaFenetre_pos_x,self.MaFenetre_pos_y)
@@ -107,10 +108,10 @@ class cVaisseau :
         self.score.set('Score : ' + str(score))
 
     def set_vie(self,lst_vie) :
-        vie_depart = 3
-        vie_actuelle = vie_depart - len(lst_vie)
+        vie_depart = 3 #nb vie au lancement du jeu
+        vie_actuelle = vie_depart - len(lst_vie) #lst_vie se remplit à chaque coup reçu
         print(vie_actuelle)
-        self.vie.set('Vies : ' + str(vie_actuelle))
+        self.vie.set('Vies : ' + str(vie_actuelle)) #mise à jour label
 
 
 
