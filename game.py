@@ -21,15 +21,19 @@ To do :
 """
 
 class game:
-    def __init__(self,ennemies,btnQuitter,btnStart):
+    def __init__(self,ennemies,window,btnQuitter,btnStart,Frame1,Frame2):
         self.ennemies=ennemies
+        self.window=window
         self.btnQuitter=btnQuitter
         self.btnStart=btnStart
+        self.Frame1=Frame1
+        self.Frame2=Frame2
     
     def end(self):
+        from interfaces import restart
         self.ennemies.stop()
-        self.btnStart.config(text="Nouvelle partie")
-        self.btnStart.pack()
+        self.btnQuitter.configure(text="revenir à l'accueil",command=lambda:restart(self.window,self.Frame1,self.Frame2))
+        self.btnQuitter
     
     def start(self):
         self.btnQuitter.config(text="Quitter la partie")

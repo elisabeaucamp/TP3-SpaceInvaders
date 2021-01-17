@@ -19,7 +19,7 @@ from vaisseau import cVaisseau
 from ilots import cIlot
 from game import game
 
-def generation(canvas,window,width,Frame2,lst_vie,Quitter,Start):
+def generation(canvas,window,width,Frame1,Frame2,lst_vie,Quitter,Start):
     #Génération des aliens
     """
     On génère une grille d'alien de alien_ligne x alien_colonne
@@ -44,6 +44,6 @@ def generation(canvas,window,width,Frame2,lst_vie,Quitter,Start):
     ennemies=alien(alien_array=alien_array,canvas=canvas,window=window,ilot = unIlot)
     
     #génération de la class game
-    jeux=game(ennemies=ennemies,btnQuitter=Quitter,btnStart=Start)
+    jeux=game(ennemies=ennemies,window=window,btnQuitter=Quitter,btnStart=Start,Frame1=Frame1,Frame2=Frame2)
     
     return ennemies,unVaisseau,unIlot,jeux

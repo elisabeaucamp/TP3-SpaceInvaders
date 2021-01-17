@@ -50,7 +50,6 @@ from generation import generation
 
 
 def accueil(MaFenetre):
-    
     #Largeur et hauteur de la fenêtre de jeux    
     width = 800
     height = 500
@@ -82,7 +81,9 @@ def accueil(MaFenetre):
 
 def game(MaFenetre,Frame_accueil,width,height,lst_vie):
 
-
+    #Suppression de la frame de la page d'accueil
+    Frame_accueil.pack_forget()    
+    
     # creation d'un widget Frame dans la fenetre principale
     Frame1 = Frame(MaFenetre,relief='groove', bg = 'grey')
     Frame1.pack(side='left',padx=10,pady=10)
@@ -95,12 +96,6 @@ def game(MaFenetre,Frame_accueil,width,height,lst_vie):
     Canevas.focus_set()
     Canevas.pack()
     
-
-    #Suppression de la frame de la page d'accueil
-    Frame_accueil.pack_forget()
-    """LANCEMENT DU JEUX"""
-    
-    
     # creation d'un widget Frame dans la fenetre principale
     Frame2 = Frame(MaFenetre,relief='groove', bg ='pink')
     Frame2.pack(side='left',padx=20,pady=10)
@@ -108,15 +103,15 @@ def game(MaFenetre,Frame_accueil,width,height,lst_vie):
     BoutonQuitter = Button(Frame2,width=10,text='Quitter',command=lambda:quitter(MaFenetre,Frame1,Frame2,width,height,Canevas,jeux))
     BoutonStart = Button(Frame2,width=10,text='Lancer le jeux',command=lambda:start(Canevas,ennemies,unVaisseau,unIlot,jeux))
     
-    ennemies,unVaisseau,unIlot,jeux = generation(Canevas,MaFenetre,width,Frame2,lst_vie,BoutonQuitter,BoutonStart)
+    ennemies,unVaisseau,unIlot,jeux = generation(Canevas,MaFenetre,width,Frame1,Frame2,lst_vie,BoutonQuitter,BoutonStart)
     BoutonStart.pack()
     BoutonQuitter.pack()
 
 
 def quitter(MaFenetre,Frame1,Frame2,width,height,Canevas,jeux):
     jeux.end()
-    Frame1.destroy()
-    Frame2.destroy()
+    Frame1.pack_forget()
+    Frame2.pack_forget()
     accueil(MaFenetre)
 
 def game_over(canvas,jeux):
@@ -148,3 +143,8 @@ def start(Canevas,ennemies,unVaisseau,unIlot,jeux):
     Canevas.bind('<Left>',unVaisseau.deplacer)
     Canevas.bind('<Right>',unVaisseau.deplacer)
     Canevas.bind('<space>',unVaisseau.tir)
+    
+def restart(window,Frame1,Frame2):
+    Frame1.pack_forget()
+    Frame2.pack_forget()
+    accueil(window)

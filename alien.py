@@ -19,10 +19,12 @@ Attribues :
       Si tour=2, alors cela veut dire que la grille d'alien a fait un allé retour.
       On fait alors descendre cette grille de quelque pixel vers le bas.
     - after_id_alien : id de la méthode after dans la fonction move() de la class alien. Cela permet d'arrêter ce after dans la fonction stop().
+    - jeux : adresse de la class jeux permettant de faire les modifications nécessaires à la fin d'une partie
 
 Fonctions : 
     - move : fait bouger toute les 3 secondes les alien de dX sur le côté et de dY vers le bas.
     - stop : cette fonction permet d'arrêter la fonction move() pour arrêter le déplacement des alien.
+    - init2 : permet de définir l'attribue 'jeux' : adresse de l'objet jeux permettant de mettre fin au jeux
 
 Class projectile_alien :
     - Attribues : 
@@ -68,20 +70,28 @@ class alien:
     def move(self,dX,dY,ilot,vaisseau):
         #Fonction permettant de faire bouger l'alien
         
-        #détection de la bordure droite du canvas
-        if self.alien_array[len(self.alien_array)-1][0]+self.dim > int(self.canvas.cget('width'))-10:
-            dX=-dX
-            self.tour+=1
+        #rebouclage de la fonction toutes les 3 secondes
+        #On récupère l'id du after, cela permettra de l'arreter quand on le veux
+        #Le after est appliqué au début pour pouvoir récupérer son ID
+        self.after_id_alien = self.window.after(2500,lambda:self.move(dX,dY,ilot,vaisseau))
         
-        #détection de la bordure gauche du canvas
-        if self.alien_array[0][0] < 10:
-            dX=-dX
-            self.tour+=1
+        for i in range(len(self.alien_array)):
+            #détection de la bordure droite du canvas
+            if self.alien_array[i][0]+self.dim > int(self.canvas.cget('width'))-10 and self.alien_array[i][3] == 1:
+                dX=-dX
+                self.tour+=1
+                break
+            
+            #détection de la bordure gauche du canvas
+            if self.alien_array[i][0] < 10 and self.alien_array[i][3] == 1:
+                dX=-dX
+                self.tour+=1
+                break
         
         victoire=0
         #mise à jour des coordonées x et y de chaque alien
         for i in range(len(self.alien_array)):
-            victoire += self.alien_array[i][3] #détection d'une victoire
+            victoire += self.alien_array[i][3] #permet la détection de la victoire
             self.alien_array[i][0]+=dX
             if self.tour==2:
                 #"si un allé retour à été fait..."
@@ -93,10 +103,13 @@ class alien:
                 return #on arrêtre l'exécution de la fonction
             
             self.canvas.coords(self.alien_array[i][2],self.alien_array[i][0],self.alien_array[i][1],self.alien_array[i][0]+self.dim,self.alien_array[i][1]+self.dim)
-            
-            if victoire==0:
-                from interfaces import win
-                win(self.canvas,self.jeux)
+        
+        
+        #détection d'une victoires
+        if victoire==0:
+            from interfaces import win
+            win(self.canvas,self.jeux)
+            print(victoire)
 
         #remise à 0 du compteur d'allé retour
         if self.tour==2:
@@ -108,15 +121,9 @@ class alien:
             projectile_alien(alien_array=self.alien_array,canvas=self.canvas,window=self.window,alien_dim=self.dim,ilot=ilot,vaisseau = vaisseau,jeux=self.jeux)
         
         
-        #rebouclage de la fonction toutes les 3 secondes
-        #On récupère l'id du after, cela permettra de l'arreter quand on le veux
-        self.after_id_alien = self.window.after(2500,lambda:self.move(dX,dY,ilot,vaisseau))
         
     def stop(self):
-        if self.after_id_alien != -1:
-            self.window.after_cancel(self.after_id_alien)
-        else:
-            return
+        self.window.after_cancel(self.after_id_alien)
     
     def init2(self,jeux):
         self.jeux=jeux
