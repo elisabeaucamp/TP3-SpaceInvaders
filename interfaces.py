@@ -44,11 +44,9 @@ Fonctions :
 To do : faire la fonction game_over()
 """
 
-from tkinter import Canvas, Button, PhotoImage, Frame, Menu, Label, StringVar
+from tkinter import Canvas, Button, PhotoImage, Frame, Menu, Label
 from a_propos import about
 from generation import generation
-from vaisseau import cVaisseau
-from alien import alien
 
 
 def accueil(MaFenetre):
@@ -106,33 +104,41 @@ def game(MaFenetre,Frame_accueil,width,height,lst_vie):
     # creation d'un widget Frame dans la fenetre principale
     Frame2 = Frame(MaFenetre,relief='groove', bg ='pink')
     Frame2.pack(side='left',padx=20,pady=10)
+
+    BoutonQuitter = Button(Frame2,width=10,text='Quitter',command=lambda:quitter(MaFenetre,Frame1,Frame2,width,height,Canevas,jeux))
+    BoutonStart = Button(Frame2,width=10,text='Lancer le jeux',command=lambda:start(Canevas,ennemies,unVaisseau,unIlot,jeux))
     
-    ennemies,unVaisseau,unIlot = generation(Canevas,MaFenetre,width,Frame2,lst_vie)
-
-    BoutonQuitter = Button(Frame2,width=10,text='Quitter',command=lambda:quitter(MaFenetre,Frame1,Frame2,width,height,Canevas))
-    BoutonQuitter.pack()
-    BoutonQuitter = Button(Frame2,width=10,text='Lancer le jeux',command=lambda:start(Canevas,ennemies,unVaisseau,unIlot))
+    ennemies,unVaisseau,unIlot,jeux = generation(Canevas,MaFenetre,width,Frame2,lst_vie,BoutonQuitter,BoutonStart)
+    BoutonStart.pack()
     BoutonQuitter.pack()
 
-def quitter(MaFenetre,Frame1,Frame2,width,height,Canevas):
+
+def quitter(MaFenetre,Frame1,Frame2,width,height,Canevas,jeux):
+    jeux.end()
     Frame1.destroy()
     Frame2.destroy()
     accueil(MaFenetre)
 
-def game_over(canvas):
+def game_over(canvas,jeux):
+    jeux.end()
     canvas.delete("all")
     photo = PhotoImage(file='Images/game_over.gif')
     canvas.photo = photo #on conserve la photo de l'image
     canvas.create_image(-30,10,anchor='nw',image=photo)
 
-def win(canvas):
+def win(canvas,jeux):
+    jeux.end()
     canvas.delete("all")
     photo = PhotoImage(file='Images/win.gif')
     canvas.photo = photo #on conserve la photo de l'image
     canvas.create_image(50,10,anchor='nw',image=photo)
 
-def start(Canevas,ennemies,unVaisseau,unIlot):
+def start(Canevas,ennemies,unVaisseau,unIlot,jeux):
+    
+    jeux.start()
+    
     #Lancement du mouvement des ennemies
+    ennemies.init2(jeux)
     ennemies.move(20,10,unIlot,unVaisseau)
     
     #fonction permettant le lien entre vaisseau <-> alien <-> ilots

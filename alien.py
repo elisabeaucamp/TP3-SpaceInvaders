@@ -86,39 +86,43 @@ class alien:
             if self.tour==2:
                 #"si un allé retour à été fait..."
                 self.alien_array[i][1]+=dY
-            
-            self.canvas.coords(self.alien_array[i][2],self.alien_array[i][0],self.alien_array[i][1],self.alien_array[i][0]+self.dim,self.alien_array[i][1]+self.dim)
+                
             if self.alien_array[i][1]+self.dim > 370:
                 from interfaces import game_over
-                game_over(self.canvas)
+                game_over(self.canvas,self.jeux)
                 return #on arrêtre l'exécution de la fonction
+            
+            self.canvas.coords(self.alien_array[i][2],self.alien_array[i][0],self.alien_array[i][1],self.alien_array[i][0]+self.dim,self.alien_array[i][1]+self.dim)
             
             if victoire==0:
                 from interfaces import win
-                win(self.canvas)
+                win(self.canvas,self.jeux)
 
         #remise à 0 du compteur d'allé retour
         if self.tour==2:
             self.tour=0
         
+        
         shot = random.uniform(1,2)
         if shot > 1:
-            projectile_alien(alien_array=self.alien_array,canvas=self.canvas,window=self.window,alien_dim=self.dim,ilot=ilot,vaisseau = vaisseau)
+            projectile_alien(alien_array=self.alien_array,canvas=self.canvas,window=self.window,alien_dim=self.dim,ilot=ilot,vaisseau = vaisseau,jeux=self.jeux)
+        
         
         #rebouclage de la fonction toutes les 3 secondes
         #On récupère l'id du after, cela permettra de l'arreter quand on le veux
         self.after_id_alien = self.window.after(2500,lambda:self.move(dX,dY,ilot,vaisseau))
         
     def stop(self):
-        print(self.after_id_alien)
         if self.after_id_alien != -1:
-            print("stop")
             self.window.after_cancel(self.after_id_alien)
         else:
             return
+    
+    def init2(self,jeux):
+        self.jeux=jeux
 
 class projectile_alien:
-    def __init__(self,alien_array,canvas,window,alien_dim,ilot,vaisseau):
+    def __init__(self,alien_array,canvas,window,alien_dim,ilot,vaisseau,jeux):
         self.alien_array=alien_array
         self.canvas=canvas
         self.window=window
@@ -126,6 +130,7 @@ class projectile_alien:
         self.ilot = ilot
         self.vaisseau = vaisseau
         self.proj_dim=10 #dimension du projectile
+        self.jeux=jeux
         
         alien_live=[]
         #on prend un alien aléatoire parmis la liste et on récupère ses coordonnées x et y
@@ -174,14 +179,10 @@ class projectile_alien:
                     print(len(self.vaisseau.liste_vie))
                     if len(self.vaisseau.liste_vie) == 3 :
                         from interfaces import game_over
-                        game_over(self.canvas)
+                        game_over(self.canvas,self.jeux)
                         return
                     return
 
 
         self.canvas.coords(self.proj_rect,self.coord_x,self.coord_y,self.coord_x+self.proj_dim,self.coord_y+self.proj_dim)
         self.after_id_proj = self.window.after(20,lambda:self.move(dY,ilot,vaisseau)) #on récupère l'id de la méthode after pour pouvoir l'utiliser dans le stop
-
-    
-    def stop(self):
-        self.window.after_cancel(self.after_id_proj)
