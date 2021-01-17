@@ -1,6 +1,6 @@
 """
-Auteur : Elisa
-Date : 11 janvier 2021
+Auteur : Elisa Beaucamp
+Date : 11/01/2021
 
 =========================
 cVaisseau : 
@@ -33,7 +33,7 @@ Fonction :
       la fonction détecte aussi une colision avec un alien ou un ilot
 
 =========================
-To do : détecter une victoire potentielle
+To do :
 """
 
 from ilots import cIlot
@@ -58,7 +58,6 @@ class cVaisseau :
         #création du vaisseau
         self.img_vaisseau = PhotoImage(file='Images/vaisseau.png')
         self.rect_vaisseau = self.canvas.create_image(self.MaFenetre_pos_x,self.MaFenetre_pos_y, image = self.img_vaisseau)
-        #l'image ne devrait pas avoir de fond car l'image téléchargée est un png transparent mais le fond blanc apparaît automatiquement
 
         #création tag
         self.canvas.addtag_closest('vaisseau',self.MaFenetre_pos_x,self.MaFenetre_pos_y)
@@ -110,11 +109,7 @@ class cVaisseau :
     def set_vie(self,lst_vie) :
         vie_depart = 3 #nb vie au lancement du jeu
         vie_actuelle = vie_depart - len(lst_vie) #lst_vie se remplit à chaque coup reçu
-        print(vie_actuelle)
         self.vie.set('Vies : ' + str(vie_actuelle)) #mise à jour label
-
-
-
 
 class cProjectile :
     def __init__(self,posx,posy,Canevas,rect_vaisseau) :
@@ -165,6 +160,5 @@ class cProjectile :
                         self.canvas.delete(colision[i])
                     return
                 
-
         self.canvas.coords(self.rect_projectile, self.MaFenetre_posx - 5, self.MaFenetre_posy - 5, self.MaFenetre_posx + 5, self.MaFenetre_posy + 5)
-        self.canvas.after(15,lambda:self.move(event,alien,ilot,vaisseau))
+        self.canvas.after(15,lambda:self.move(event,alien,ilot,vaisseau)) #le projectile avance toutes les 15 ms

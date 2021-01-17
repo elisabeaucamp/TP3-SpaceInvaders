@@ -1,6 +1,16 @@
-'''auteur : Elisa
-Date : 10 janvier
-To do : création des ilots'''
+"""
+Auteur : Elisa Beaucamp
+Date : 11/01/2021
+
+=========================
+Classe création des ilots
+Cette classe prend comme entrées :
+    - canvas : l'adresse du canvas dans lequel le jeux se déroule
+Cette fonction retourne :
+    - 3 ilots de protection contre les tirs aliens
+========================
+To do :
+"""
 
 from tkinter import Tk, Canvas, Button, PhotoImage, Frame, Menu
 
