@@ -6,6 +6,7 @@ Date : 11 Janvier 2021
 Programme principale, permet le lancement du jeux
 On génère simplement la fenêtre de jeux, puis on appelle la fonction accueil permettant
 d'afficher la fenêtre d'accueil du jeux
+
 =========================
 To do : 
     - Ajout d'un game over

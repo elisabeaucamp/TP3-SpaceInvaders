@@ -7,7 +7,7 @@ Cette fonction permet d'afficher le contenu la fenêtre 'à propos' lorsque l'on
 dans : menu --> à propos
 
 =========================
-To do : modification du texte
+To do : modification potentiel du texte
 """
 
 from tkinter import Tk, Label

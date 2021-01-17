@@ -7,6 +7,8 @@ Attribues :
     - ennemies : adresse vers la class ennemies.
     - btnQuitter : adresse vers le bouton Quitter de la fenêtre.
     - btnStart : adresse vers le bouton Start de la fenêtre.
+    - Frame1 : adresse la frame principal dans lequel on retrouve le canvas
+    - Frame2 : adresse de la frame d'information dans lauqelle on retrouve le score, les vies etc...
 
 Fonction :
     - end : permet de mettre fin à la partie proprement.

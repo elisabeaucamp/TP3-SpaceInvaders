@@ -19,6 +19,7 @@ Attribues :
       Si tour=2, alors cela veut dire que la grille d'alien a fait un allé retour.
       On fait alors descendre cette grille de quelque pixel vers le bas.
     - after_id_alien : id de la méthode after dans la fonction move() de la class alien. Cela permet d'arrêter ce after dans la fonction stop().
+    - ilot : adresse de l'objet ilot permettant de gérer la colision avec les projectiles des alien
     - jeux : adresse de la class jeux permettant de faire les modifications nécessaires à la fin d'une partie
 
 Fonctions : 
@@ -39,7 +40,7 @@ Fonctions :
     - stop : même chose que pour la fonction stop de la class alien.
 
 =========================
-To do : ajout colision projectiles et stop propre dans interface (avec un ID 'alien_proj' sur le rectangle projectile).
+To do : ajout images alien
 """
 
 import random
@@ -70,19 +71,18 @@ class alien:
     def move(self,dX,dY,ilot,vaisseau):
         #Fonction permettant de faire bouger l'alien
         
-        #rebouclage de la fonction toutes les 3 secondes
-        #On récupère l'id du after, cela permettra de l'arreter quand on le veux
-        #Le after est appliqué au début pour pouvoir récupérer son ID
+        #Rebouclage de la fonction toutes les 2.5 secondes. Le after est appliqué au début pour pouvoir récupérer son ID actuel.
         self.after_id_alien = self.window.after(2500,lambda:self.move(dX,dY,ilot,vaisseau))
         
+        #détection des bords pour appliquer un changement de direction
         for i in range(len(self.alien_array)):
-            #détection de la bordure droite du canvas
+            #détection de la bordure droite
             if self.alien_array[i][0]+self.dim > int(self.canvas.cget('width'))-10 and self.alien_array[i][3] == 1:
                 dX=-dX
                 self.tour+=1
                 break
             
-            #détection de la bordure gauche du canvas
+            #détection de la bordure gauche
             if self.alien_array[i][0] < 10 and self.alien_array[i][3] == 1:
                 dX=-dX
                 self.tour+=1
@@ -106,7 +106,7 @@ class alien:
         
         
         #détection d'une victoires
-        if victoire==0:
+        if victoire==0: #si la somme == 0 : alors il n'y a plus d'alien en vie
             from interfaces import win
             win(self.canvas,self.jeux)
             print(victoire)
@@ -115,17 +115,17 @@ class alien:
         if self.tour==2:
             self.tour=0
         
-        
+        #Les alien on 1 chance sur 2 de tirer.
         shot = random.uniform(1,2)
         if shot > 1:
+            #génération d'un projectile dans le cas ou on à tirer un chiffre au dessus de 1
             projectile_alien(alien_array=self.alien_array,canvas=self.canvas,window=self.window,alien_dim=self.dim,ilot=ilot,vaisseau = vaisseau,jeux=self.jeux)
-        
-        
         
     def stop(self):
         self.window.after_cancel(self.after_id_alien)
     
     def init2(self,jeux):
+        #ajout de l'attribue jeux à la class alien
         self.jeux=jeux
 
 class projectile_alien:
@@ -140,18 +140,19 @@ class projectile_alien:
         self.jeux=jeux
         
         alien_live=[]
-        #on prend un alien aléatoire parmis la liste et on récupère ses coordonnées x et y
+        #on récupère la liste de tous les alien en vie
         for i in range(len(self.alien_array)):
             if self.alien_array[i][3]==1:
                 alien_live.append([self.alien_array[i][0],self.alien_array[i][1]])
         
+        #on prend un alien aléatoire parmis tous les alien en vie
         alien_ind = random.randint(0,len(alien_live)-1)
-        self.coord_x=alien_live[alien_ind][0]
-        self.coord_y=alien_live[alien_ind][1]
+        self.coord_x=alien_live[alien_ind][0] #on récupère la coordonnée X de l'alien pris au hasard
+        self.coord_y=alien_live[alien_ind][1] #on récupère la coordonnée Y de l'alien pris au hasard
         
-        
+        #Génération du projectile sur le canvas
         self.proj_rect = self.canvas.create_rectangle(self.coord_x+self.alien_dim/2,self.coord_y+self.alien_dim/2,self.coord_x+self.proj_dim,self.coord_y+self.proj_dim,fill='blue')
-        self.move(10,ilot,vaisseau)
+        self.move(10,ilot,vaisseau) 
         
     def move(self,dY,ilot,vaisseau):
         self.coord_y += dY
@@ -170,6 +171,7 @@ class projectile_alien:
 
         if colision :
             for i in range(len(colision)):
+                #colision avec un ilot
                 if colision[i] in list(ilotag) :
                     self.canvas.delete(self.proj_rect)
                     if ilot.returncolor(colision[i]) == 'blue' : #si l'ilot est bleu il change de couleur
@@ -179,6 +181,7 @@ class projectile_alien:
                     elif ilot.returncolor(colision[i]) == 'black' :#au 3e coup l'ilot se détruit
                         self.canvas.delete(colision[i])
                     return
+                #colision avec le vaisseau
                 if colision[i] in list(vaisseautag):
                     self.canvas.delete(self.proj_rect)
                     self.vaisseau.liste_vie.append(1)

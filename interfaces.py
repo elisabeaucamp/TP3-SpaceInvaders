@@ -39,9 +39,12 @@ Fonctions :
             - Canevas : adresse du canvas dans lequel on à l'interface du jeux
             - MaFenetre : adresse de la fenêtre du jeux, utile pour certains objets
             - width : largeur du canvas du jeux, utile pour l'objet vaisseau
+    
+    - restart : permet de revenir à l'accueil
+      On supprime d'abord les 2 frame du jeux puis on appel la fonction accueil
 
 =========================
-To do : faire la fonction game_over()
+To do :
 """
 
 from tkinter import Canvas, Button, PhotoImage, Frame, Menu, Label
@@ -55,7 +58,7 @@ def accueil(MaFenetre):
     height = 500
     lst_vie = []
     
-    """MENU PRINCIPAL"""
+    """Menu du lancement du programme"""
     Frame_accueil = Frame(MaFenetre,relief='groove',bg='grey')
     titre = Label(Frame_accueil,bg='grey',font="Verdana 10",text='Bienvenue sur Space invader')
     titre.pack(padx=100,pady=20)
@@ -82,8 +85,9 @@ def accueil(MaFenetre):
 def game(MaFenetre,Frame_accueil,width,height,lst_vie):
 
     #Suppression de la frame de la page d'accueil
-    Frame_accueil.pack_forget()    
+    Frame_accueil.pack_forget()
     
+    """Mise en place de l'interface du jeux"""
     # creation d'un widget Frame dans la fenetre principale
     Frame1 = Frame(MaFenetre,relief='groove', bg = 'grey')
     Frame1.pack(side='left',padx=10,pady=10)
@@ -109,12 +113,14 @@ def game(MaFenetre,Frame_accueil,width,height,lst_vie):
 
 
 def quitter(MaFenetre,Frame1,Frame2,width,height,Canevas,jeux):
+    #appel de la fonction end de la class jeux pour stoper le déplacement des alien
     jeux.end()
     Frame1.pack_forget()
     Frame2.pack_forget()
     accueil(MaFenetre)
 
 def game_over(canvas,jeux):
+    #appel de la fonction end de la class jeux pour stoper le déplacement des alien
     jeux.end()
     canvas.delete("all")
     photo = PhotoImage(file='Images/game_over.gif')
@@ -122,6 +128,7 @@ def game_over(canvas,jeux):
     canvas.create_image(-30,10,anchor='nw',image=photo)
 
 def win(canvas,jeux):
+    #appel de la fonction end de la class jeux pour stoper le déplacement des alien
     jeux.end()
     canvas.delete("all")
     photo = PhotoImage(file='Images/win.gif')
@@ -145,6 +152,9 @@ def start(Canevas,ennemies,unVaisseau,unIlot,jeux):
     Canevas.bind('<space>',unVaisseau.tir)
     
 def restart(window,Frame1,Frame2):
+    #suppression des frame
     Frame1.pack_forget()
     Frame2.pack_forget()
+    
+    #appel de la fonction accueil
     accueil(window)
