@@ -56,7 +56,7 @@ class cVaisseau :
         self.liste_vie = lst_vie
 
         #création du vaisseau
-        self.img_vaisseau = PhotoImage(file='Images/vaisseau_dimensionne.png')
+        self.img_vaisseau = PhotoImage(file='Images/vaisseau.png')
         self.rect_vaisseau = self.canvas.create_image(self.MaFenetre_pos_x,self.MaFenetre_pos_y, image = self.img_vaisseau)
         #l'image ne devrait pas avoir de fond car l'image téléchargée est un png transparent mais le fond blanc apparaît automatiquement
 
