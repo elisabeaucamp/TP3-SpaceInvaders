@@ -1,6 +1,6 @@
 """
-Auteur : Elisa
-Date : 11 Janvier 2021
+Auteur : Elisa Beaucamp
+Date : 11/01/2021
 
 =========================
 Programme principale, permet le lancement du jeux
