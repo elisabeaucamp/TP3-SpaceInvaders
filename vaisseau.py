@@ -89,9 +89,6 @@ class cVaisseau :
             projectile = cProjectile(posx = self.MaFenetre_pos_x , posy = self.MaFenetre_pos_y,Canevas = self.canvas,rect_vaisseau=self.rect_vaisseau)
             #on le fait bouger
             projectile.move(event,self.alien,self.ilot,self.vaisseau)
-    
-    def death(self):
-        self.canvas.delete(self.rect_vaisseau)
 
     #récuperer le vaisseau l'alien et l'ilot meme s'ils sont créé après l'objet vaisseau dans le PP
     def init2(self,alien,ilot,vaisseau): 

@@ -109,13 +109,12 @@ def game(MaFenetre,Frame_accueil,width,height,lst_vie):
     
     ennemies,unVaisseau,unIlot = generation(Canevas,MaFenetre,width,Frame2,lst_vie)
 
-    BoutonQuitter = Button(Frame2,width=10,text='Quitter',command=lambda:quitter(MaFenetre,Frame1,Frame2,width,height,Canevas,ennemies))
+    BoutonQuitter = Button(Frame2,width=10,text='Quitter',command=lambda:quitter(MaFenetre,Frame1,Frame2,width,height,Canevas))
     BoutonQuitter.pack()
     BoutonQuitter = Button(Frame2,width=10,text='Lancer le jeux',command=lambda:start(Canevas,ennemies,unVaisseau,unIlot))
     BoutonQuitter.pack()
 
-def quitter(MaFenetre,Frame1,Frame2,width,height,Canevas,ennemies):
-    ennemies.stop() #on arrete le déplacement des ennemies
+def quitter(MaFenetre,Frame1,Frame2,width,height,Canevas):
     Frame1.destroy()
     Frame2.destroy()
     accueil(MaFenetre)
@@ -125,7 +124,13 @@ def game_over(canvas):
     photo = PhotoImage(file='Images/game_over.gif')
     canvas.photo = photo #on conserve la photo de l'image
     canvas.create_image(-30,10,anchor='nw',image=photo)
-    
+
+def win(canvas):
+    canvas.delete("all")
+    photo = PhotoImage(file='Images/win.gif')
+    canvas.photo = photo #on conserve la photo de l'image
+    canvas.create_image(50,10,anchor='nw',image=photo)
+
 def start(Canevas,ennemies,unVaisseau,unIlot):
     #Lancement du mouvement des ennemies
     ennemies.move(20,10,unIlot,unVaisseau)

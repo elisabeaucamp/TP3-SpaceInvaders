@@ -30,7 +30,7 @@ def generation(canvas,window,width,Frame2,lst_vie):
     #génération du tableau
     for i in range(alien_ligne):
         for j in range(alien_colonne):
-            y=int(300/alien_ligne)*i+20
+            y=int(300/alien_ligne)*i+120
             x=int(500/alien_colonne)*j+100
             alien_array.append([x,y])
     

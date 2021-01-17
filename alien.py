@@ -53,12 +53,13 @@ class alien:
         self.dim=20
         self.tour=0
         self.ilot = ilot
+        self.after_id_alien=-1
         
         #Boucle permettant d'enregistrer l'adresse de l'objet rectangle et l'état de l'alien (mort ou vivant)
         for i in range(len(self.alien_array)):
-            #self.img_alien = PhotoImage(file = 'Images/alien.png')
-            #rect = self.canvas.create_image(self.alien_array[i][0],self.alien_array[i][1],self.alien_array[i][0]+self.dim,self.alien_array[i][1]+self.dim, image = self.img_alien)
             rect=self.canvas.create_rectangle(self.alien_array[i][0],self.alien_array[i][1],self.alien_array[i][0]+self.dim,self.alien_array[i][1]+self.dim, fill = 'red')
+            #img_alien=PhotoImage(file='Images/alien.png')
+            #rect=self.canvas.create_image(self.alien_array[i][0],self.alien_array[i][1],image=img_alien)
             #on ajoute un tag 'ennemie' à tous les alie : utile pour les colisions
             self.canvas.addtag_closest('ennemie',self.alien_array[i][0],self.alien_array[i][1])
             self.alien_array[i].append(rect)
@@ -77,8 +78,10 @@ class alien:
             dX=-dX
             self.tour+=1
         
+        victoire=0
         #mise à jour des coordonées x et y de chaque alien
         for i in range(len(self.alien_array)):
+            victoire += self.alien_array[i][3] #détection d'une victoire
             self.alien_array[i][0]+=dX
             if self.tour==2:
                 #"si un allé retour à été fait..."
@@ -89,8 +92,12 @@ class alien:
                 from interfaces import game_over
                 game_over(self.canvas)
                 return #on arrêtre l'exécution de la fonction
+            
+            if victoire==0:
+                from interfaces import win
+                win(self.canvas)
 
-        #remise à 9 du compteur d'allé retour
+        #remise à 0 du compteur d'allé retour
         if self.tour==2:
             self.tour=0
         
@@ -103,7 +110,12 @@ class alien:
         self.after_id_alien = self.window.after(2500,lambda:self.move(dX,dY,ilot,vaisseau))
         
     def stop(self):
-        self.window.after_cancel(self.after_id_alien)
+        print(self.after_id_alien)
+        if self.after_id_alien != -1:
+            print("stop")
+            self.window.after_cancel(self.after_id_alien)
+        else:
+            return
 
 class projectile_alien:
     def __init__(self,alien_array,canvas,window,alien_dim,ilot,vaisseau):
@@ -121,8 +133,6 @@ class projectile_alien:
             if self.alien_array[i][3]==1:
                 alien_live.append([self.alien_array[i][0],self.alien_array[i][1]])
         
-        print(len(alien_live))
-        
         alien_ind = random.randint(0,len(alien_live)-1)
         self.coord_x=alien_live[alien_ind][0]
         self.coord_y=alien_live[alien_ind][1]
@@ -134,6 +144,7 @@ class projectile_alien:
     def move(self,dY,ilot,vaisseau):
         self.coord_y += dY
         
+        #détection du projectile lorsqu'il sort de la fenêtre du canvas
         if self.coord_x > self.canvas.winfo_height():
             self.canvas.delete(self.proj_rect)
             return
@@ -171,12 +182,6 @@ class projectile_alien:
         self.canvas.coords(self.proj_rect,self.coord_x,self.coord_y,self.coord_x+self.proj_dim,self.coord_y+self.proj_dim)
         self.after_id_proj = self.window.after(20,lambda:self.move(dY,ilot,vaisseau)) #on récupère l'id de la méthode after pour pouvoir l'utiliser dans le stop
 
-
-    
-    
-    
-    
-    
     
     def stop(self):
         self.window.after_cancel(self.after_id_proj)
