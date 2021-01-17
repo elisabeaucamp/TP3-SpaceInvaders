@@ -44,6 +44,6 @@ def generation(canvas,window,width,Frame2,lst_vie,Quitter,Start):
     ennemies=alien(alien_array=alien_array,canvas=canvas,window=window,ilot = unIlot)
     
     #génération de la class game
-    jeux=game(ennemies=ennemies,vaisseau=unVaisseau,canvas=canvas,window=window,btnQuitter=Quitter,btnStart=Start)
+    jeux=game(ennemies=ennemies,btnQuitter=Quitter,btnStart=Start)
     
     return ennemies,unVaisseau,unIlot,jeux
